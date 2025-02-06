@@ -4,10 +4,10 @@ import uuid from './uuid.js';
 
 export default class Ellipse extends BaseItem {
   constructor(itemExtra) {
-    super(itemExtra || Ellipse.defaultItemExtra());
+    super(itemExtra || Ellipse.itemExtraData());
   }
 
-  static defaultItemExtra() {
+  static itemExtraData() {
     return {
       uuid: uuid(),
       type: 'ellipse',

@@ -4,10 +4,10 @@ import uuid from './uuid.js';
 
 export default class Circle extends BaseItem {
   constructor(itemExtra) {
-    super(itemExtra || Circle.defaultItemExtra());
+    super(itemExtra || Circle.itemExtraData());
   }
 
-  static defaultItemExtra() {
+  static itemExtraData() {
     return {
       uuid: uuid(),
       type: 'circle',
