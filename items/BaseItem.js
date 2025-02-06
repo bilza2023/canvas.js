@@ -2,11 +2,18 @@
 
 
 export default class BaseItem {
+  
+  static env = null;
+
     constructor(itemExtra = {}, dialogueBox = []) {
       this.itemExtra = itemExtra;
       this.dialogueBox = dialogueBox;
     }
   
+    static setEnv(env) {
+      BaseItem.env = env; // Assign RenderContext to all items
+    }
+    
     // Subclasses should override this to provide their default properties.
     itemExtraData() {
       return {};

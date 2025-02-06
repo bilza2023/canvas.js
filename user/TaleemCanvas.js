@@ -1,15 +1,18 @@
 import DrawModule from "../core/DrawModule.js";
 import EventModule from "../core/EventModule.js";
 import InputModule from "../core/InputModule.js";
+import Add from "./Add.js";
 
 export default class TaleemCanvas {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext("2d");
         this.items = [];
+        this.add = new Add(this.items); 
         this.drawModule = new DrawModule(this.ctx, this.canvas, {}, {});
         this.eventModule = new EventModule(this.canvas, this.items);
         this.inputModule = new InputModule();
+
     }
 
     addItem(item) {
