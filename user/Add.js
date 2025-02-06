@@ -5,7 +5,7 @@ import Line from "../items/Line.js";
 import Ray from "../items/Ray.js";
 import Triangle from "../items/Triangle.js";
 // import ImageItem from "../items/ImageItem.js";
-// import TextItem from "../items/TextItem.js";
+import TextItem from "../items/TextItem.js";
 
 export default class Add {
     constructor(items) {
@@ -54,9 +54,9 @@ export default class Add {
     //     return item;
     // }
 
-    // text() {
-    //     const item = new TextItem();
-    //     this.items.push(item);
-    //     return item;
-    // }
+    text() {
+        const item = new TextItem();
+        this.items.push(item);
+        return item;
+    }
 }

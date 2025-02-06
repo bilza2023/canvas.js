@@ -1,18 +1,26 @@
 import TaleemCanvas from "./user/TaleemCanvas.js";
+import loadAssets from "./assets/loadAssets.js";
 
-const canvas = new TaleemCanvas("myCanvas");
+async function init() {
 
-const rect = canvas.add.rectangle();
-rect.x = 100;
-rect.y = 100;
+    debugger;
+    const assets = await loadAssets()
 
-const circle = canvas.add.circle();
-circle.x = 300;
-circle.y = 100;
+    const canvas = new TaleemCanvas("myCanvas" , assets);
 
-// const text = canvas.add.text();
-// text.x = 500;
-// text.y = 100;
-// text.text = "Hello Taleem!";
+    const rect = canvas.add.rectangle();
+    rect.x = 100;
+    rect.y = 100;
 
-canvas.redraw();
+    const circle = canvas.add.circle();
+    circle.x = 300;
+    circle.y = 100;
+    
+    const text = canvas.add.text();
+    text.x = 500;
+    text.y = 100;
+
+    canvas.redraw();
+}
+
+init().catch(console.error); // Start the async function and handle errors
