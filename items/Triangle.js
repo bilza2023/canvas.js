@@ -22,14 +22,16 @@ export default class Triangle extends BaseItem {
         };
     }
 
-    getBounds() {
-        return {
-            x: this.boundingRectangleX(),
-            y: this.boundingRectangleY(),
-            width: this.width,
-            height: this.height
-        };
+    boundingRectangleWidth() {
+        return Math.max(this.itemExtra.x1, this.itemExtra.x2, this.itemExtra.x3) - this.boundingRectangleX();
     }
+    
+    boundingRectangleHeight() {
+        return Math.max(this.itemExtra.y1, this.itemExtra.y2, this.itemExtra.y3) - this.boundingRectangleY();
+    }
+
+    get width() { return this.boundingRectangleWidth(); }
+get height() { return this.boundingRectangleHeight(); }
 
     boundingRectangleX() { return Math.min(this.itemExtra.x1, this.itemExtra.x2, this.itemExtra.x3); }
     boundingRectangleY() { return Math.min(this.itemExtra.y1, this.itemExtra.y2, this.itemExtra.y3); }

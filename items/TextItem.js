@@ -44,46 +44,32 @@ export default class TextItem extends BaseItem {
     ctx.restore();
   }
 
-  // Instance method for hit detection.
-  isHit(mouseX, mouseY) {
-    const width = this.width;
-    const height = this.height;
-    return (
-      mouseX >= this.itemExtra.x &&
-      mouseX <= this.itemExtra.x + width &&
-      mouseY >= this.itemExtra.y &&
-      mouseY <= this.itemExtra.y + height
-    );
-  }
-
-  // Optionally, these getters could be inherited from BaseItem.
-  get boundingRectangleX() {
-    return this.itemExtra.x;
-  }
-  get boundingRectangleY() {
-    return this.itemExtra.y;
-  }
-
+ 
   // Use the environment's text measurement function for width.
   get width() {
     if (this.itemExtra.width === 0) {
-      // If not cached, compute text width.
-      this.itemExtra.width = this.env.getTextWidth(
-        this.itemExtra.text,
-        this.itemExtra.fontSize,
-        this.itemExtra.fontFamily
-      );
+        this.itemExtra.width = BaseItem.env.getTextWidth(
+            this.itemExtra.text,
+            this.itemExtra.fontSize,
+            this.itemExtra.fontFamily
+        );
     }
     return this.itemExtra.width;
-  }
+}
+get height() {
+  return BaseItem.env.getTextWidth("W", this.itemExtra.fontSize, this.itemExtra.fontFamily);
+}
 
-  // For height, a simple approximation: the fontSize.
-  get height() {
-    if (this.itemExtra.height === 0) {
-      this.itemExtra.height = this.itemExtra.fontSize;
-    }
-    return this.itemExtra.height;
-  }
+  boundingRectangleX() { return this.x; }
+  boundingRectangleY() { return this.y; }
+  
+  boundingRectangleWidth() {
+    return this.width;
+}
+
+boundingRectangleHeight() {
+    return this.height;
+}
 
   // Setters that adjust the fontSize, then reset cached dimensions.
   set width(newWidth) {

@@ -18,37 +18,56 @@ export default class ImageItem extends BaseItem {
             globalAlpha: 1
         };
     }
-
-    draw(ctx, assets) {
+  
+    draw(ctx) {
         ctx.save();
         ctx.globalAlpha = this.itemExtra.globalAlpha;
-
-        // ✅ Get the image from assets
-        const image = assets.presentationImages.get(this.itemExtra.src);
-
+    
+        // ✅ Get the correct image from assets Map
+        const imageObj = this.env.assets.getImage(this.itemExtra.src);
+        const image = imageObj ? imageObj.img : null;
+    
         if (image) {
             // ✅ Draw the image if found
             ctx.drawImage(
                 image,
-                this.itemExtra.x,
-                this.itemExtra.y,
-                this.itemExtra.width,
-                this.itemExtra.height
+                this.x,
+                this.y,
+                this.width,
+                this.height
             );
         } else {
             // ❌ Draw Placeholder if Image is Missing
-            ctx.fillStyle = "red";
+            ctx.fillStyle = "gray";
             ctx.fillRect(
-                this.itemExtra.x,
-                this.itemExtra.y,
-                this.itemExtra.width,
-                this.itemExtra.height
+                this.x,
+                this.y,
+                this.width,
+                this.height
             );
+    
             ctx.fillStyle = "white";
             ctx.font = "16px Arial";
-            ctx.fillText("Image not found", this.itemExtra.x + 10, this.itemExtra.y + 20);
+            ctx.textAlign = "center";
+            ctx.fillText(`${this.itemExtra.src}: not found`, this.x + this.width / 2, this.y + this.height / 2);
         }
-
+    
         ctx.restore();
     }
+    
+    
+    
+    boundingRectangleX() {
+        return this.x;
+    }
+    boundingRectangleY() {
+        return this.y;
+    }
+    boundingRectangleWidth() {
+        return this.width;
+    }
+    boundingRectangleHeight() {
+        return this.height;
+    }
+    
 }

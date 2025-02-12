@@ -23,14 +23,9 @@ export default class Line extends BaseItem {
         };
     }
 
-    getBounds() {
-        return {
-            x: this.boundingRectangleX(),
-            y: this.boundingRectangleY(),
-            width: this.width,
-            height: this.height
-        };
-    }
+
+    boundingRectangleWidth() { return this.width; }
+    boundingRectangleHeight() { return this.height; }
 
     boundingRectangleX() { return Math.min(this.itemExtra.x1, this.itemExtra.x2); }
     boundingRectangleY() { return Math.min(this.itemExtra.y1, this.itemExtra.y2); }
@@ -47,8 +42,9 @@ export default class Line extends BaseItem {
         ctx.setLineDash([this.itemExtra.dash, this.itemExtra.gap]);
 
         ctx.beginPath();
-        ctx.moveTo(this.itemExtra.x1, this.itemExtra.y1);
-        ctx.lineTo(this.itemExtra.x2, this.itemExtra.y2);
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x + this.width, this.y + this.height);
+        
         ctx.stroke();
 
         ctx.restore();

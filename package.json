@@ -1,13 +1,14 @@
 {
+  "name": "taleem-canvas",
+  "version": "0.9.9",
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview",
-  "start": "node index.js"
-},
-
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node index.js"
+  },
   "dependencies": {
-    "taleem-assets": "^0.9.9"
+    "taleem-assets": "^0.9.12"
   },
   "devDependencies": {
     "vite": "^6.1.0"

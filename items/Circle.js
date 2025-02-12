@@ -25,6 +25,13 @@ export default class Circle extends BaseItem {
     };
   }
 
+  boundingRectangleWidth() {
+    return this.itemExtra.radius * 2;
+  }
+  boundingRectangleHeight() {
+    return this.itemExtra.radius * 2;
+  }
+  
   // Override bounding calculations for a circle.
   boundingRectangleX() {
     return this.x - this.itemExtra.radius;

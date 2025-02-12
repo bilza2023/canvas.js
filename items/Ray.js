@@ -26,14 +26,8 @@ export default class Ray extends BaseItem {
         };
     }
 
-    getBounds() {
-        return {
-            x: this.boundingRectangleX(),
-            y: this.boundingRectangleY(),
-            width: this.width,
-            height: this.height
-        };
-    }
+    boundingRectangleWidth() { return this.width; }
+    boundingRectangleHeight() { return this.height; }
 
     boundingRectangleX() { return Math.min(this.itemExtra.x1, this.itemExtra.x2); }
     boundingRectangleY() { return Math.min(this.itemExtra.y1, this.itemExtra.y2); }
@@ -51,8 +45,9 @@ export default class Ray extends BaseItem {
         ctx.setLineDash([this.itemExtra.dash, this.itemExtra.gap]);
 
         ctx.beginPath();
-        ctx.moveTo(this.itemExtra.x1, this.itemExtra.y1);
-        ctx.lineTo(this.itemExtra.x2, this.itemExtra.y2);
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x + this.width, this.y + this.height);
+        
         ctx.stroke();
 
         if (this.itemExtra.startArrow) {
@@ -70,19 +65,20 @@ export default class Ray extends BaseItem {
         const angle = Math.atan2(y2 - y1, x2 - x1);
         const arrowWidth = this.itemExtra.arrowWidth;
         const arrowHeight = this.itemExtra.arrowHeight;
-
+    
+        ctx.save();
+        ctx.translate(x2, y2);
+        ctx.rotate(angle);
+        
         ctx.beginPath();
-        ctx.moveTo(x2, y2);
-        ctx.lineTo(
-            x2 - arrowHeight * Math.cos(angle) + arrowWidth * Math.sin(angle),
-            y2 - arrowHeight * Math.sin(angle) - arrowWidth * Math.cos(angle)
-        );
-        ctx.lineTo(
-            x2 - arrowHeight * Math.cos(angle) - arrowWidth * Math.sin(angle),
-            y2 - arrowHeight * Math.sin(angle) + arrowWidth * Math.cos(angle)
-        );
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-arrowHeight, arrowWidth / 2);
+        ctx.lineTo(-arrowHeight, -arrowWidth / 2);
         ctx.closePath();
+        
         ctx.fill();
         ctx.stroke();
+        ctx.restore();
     }
+    
 }

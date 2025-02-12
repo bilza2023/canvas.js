@@ -25,6 +25,13 @@ export default class Ellipse extends BaseItem {
     };
   }
 
+  boundingRectangleWidth() {
+    return this.itemExtra.radiusX * 2;
+  }
+  boundingRectangleHeight() {
+    return this.itemExtra.radiusY * 2;
+  }
+  
   // Override bounding calculations using respective radii.
   boundingRectangleX() {
     return this.x - this.itemExtra.radiusX;
