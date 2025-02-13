@@ -37,9 +37,15 @@ export default class Assets {
     }
 
     // Get sprite by name
-    getSprite(name) {
-        return this.assets.sprites.get(name) || null;
-    }
+getSprite(name) {
+    return this.assets.sprites.get(name) || null;
+}
+
+getSpriteImage(name) {
+    const sprite = this.getSprite(name);
+    return sprite ? sprite.img : null; // ✅ Returns only the image
+}
+
 
     // List of all background image names
     get backgroundImagesList() {

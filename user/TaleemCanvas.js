@@ -6,9 +6,15 @@ import Add from "./Add.js";
 import Env from "../core/Env.js"
 
 export default class TaleemCanvas {
-    constructor(canvasId,assets={}) {
+    constructor(canvasId,assets={},width=1000,height=360) {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext("2d");
+        this.width = width;
+        this.height = height;
+
+        this.canvas.width = this.width ;
+        this.canvas.height = this.height;
+
         this.items = []; // the add item obj is in here so cant have items
         const env = new Env(this.ctx,assets)
         this.add = new Add(this.items,env); //reference to this.items AND env 

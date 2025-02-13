@@ -1,3 +1,4 @@
+
 export default class RenderContext {
     constructor(ctx, assets) {
         this.ctx = ctx;

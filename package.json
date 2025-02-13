@@ -1,6 +1,11 @@
+
 {
   "name": "taleem-canvas",
   "version": "0.9.9",
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -8,9 +13,10 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "taleem-assets": "^0.9.12"
+    "taleem-assets": "^0.9.15"
   },
   "devDependencies": {
     "vite": "^6.1.0"
   }
 }
+

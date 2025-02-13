@@ -48,7 +48,7 @@ export default class TextItem extends BaseItem {
   // Use the environment's text measurement function for width.
   get width() {
     if (this.itemExtra.width === 0) {
-        this.itemExtra.width = BaseItem.env.getTextWidth(
+        this.itemExtra.width = this.env.getTextWidth(
             this.itemExtra.text,
             this.itemExtra.fontSize,
             this.itemExtra.fontFamily
@@ -57,7 +57,7 @@ export default class TextItem extends BaseItem {
     return this.itemExtra.width;
 }
 get height() {
-  return BaseItem.env.getTextWidth("W", this.itemExtra.fontSize, this.itemExtra.fontFamily);
+  return this.env.getTextWidth("W", this.itemExtra.fontSize, this.itemExtra.fontFamily);
 }
 
   boundingRectangleX() { return this.x; }

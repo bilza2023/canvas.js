@@ -1,10 +1,10 @@
+
 # Taleem Assets - JavaScript Asset Management Library
 
 ## 📌 Overview
 **Taleem Assets** is a JavaScript library (made for https://taleem.help) designed to efficiently manage and load assets such as:
 - **Icons** (predefined symbols)
 - **Background Images** (base64 images loaded instantly)
-- **Sprites** (spritesheets with item position data)
 - **Regular Images** (dynamically loaded as needed)
 - **Sound Files** (loaded on demand)
 
@@ -39,20 +39,9 @@ if (bgImage) {
 }
 ```
 
-### **3️⃣ Fetching Sprites**
-Sprites are **spritesheets** containing multiple items. Use `getSprite(name)` to retrieve them.
-```javascript
-const sprite = assets.getSprite("people");
-console.log(sprite); // Full sprite object
-```
-Each sprite contains **sub-images (items)**, stored in `sprite.data`:
-```javascript
-if (sprite) {
-    sprite.data.forEach(item => {
-        console.log(`Item: ${item.name} | x: ${item.sx}, y: ${item.sy}, w: ${item.sw}, h: ${item.sh}`);
-    });
-}
-```
+### **3️⃣ Fetching and Using Sprites**
+For detailed information on how sprites work, refer to the dedicated documentation:
+[How Sprites Work in taleem-assets](./how-sprites-work.md)
 
 ### **4️⃣ Loading Regular Images Dynamically**
 Use `loadImages()` to load external images dynamically:
@@ -79,8 +68,10 @@ console.log(assets.assets.sound); // Sound object is now available
 To see the library in action, open the `index.html` file:
 [Click here to open `index.html`](index.html)
 
-This page visually loads and displays **background images, sprites, icons, and dynamically loaded assets.**
+This page visually loads and displays **background images, icons, and dynamically loaded assets.**
 
+To view the test.js code in text:
+[test.js](./test.md)
 ---
 
 ## 🛠 Available Methods in `Assets`
@@ -88,10 +79,8 @@ This page visually loads and displays **background images, sprites, icons, and d
 | Method | Description |
 |--------|-------------|
 | `getbackgroundImage(name)` | Retrieves a background image by name (returns a base64 string). |
-| `getSprite(name)` | Retrieves a sprite object (spritesheet and item data). |
 | `getImage(name)` | Retrieves a loaded regular image. |
 | `iconsList` | Returns a list of available icons. |
-| `spritesList` | Returns a list of available sprites. |
 | `backgroundImagesList` | Returns a list of available background images. |
 | `loadImages(imageList)` | Dynamically loads external images. |
 | `loadSound(soundUrl)` | Dynamically loads a sound file. |
@@ -99,7 +88,7 @@ This page visually loads and displays **background images, sprites, icons, and d
 ---
 
 ## ✅ Summary
-- **Preloaded:** Icons, background images, and sprites are **instantly available**.
+- **Preloaded:** Icons and background images are **instantly available**.
 - **Dynamic Loading:** Images and sound files can be **loaded manually** when needed.
 - **Easy Asset Retrieval:** Simple methods to fetch and display assets.
 
