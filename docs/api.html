@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - Taleem Canvas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="getting-started.html">Previous: Getting Started</a>
+    </nav>
+
+    <h1>API Reference</h1>
+    <p>This page provides a detailed reference for all available methods in <strong>TaleemCanvas</strong>.</p>
+
+    <h2>TaleemCanvas Methods</h2>
+    <ul>
+        <li><code>new TaleemCanvas(canvasId)</code> → Creates a new canvas instance.</li>
+        <li><code>canvas.draw()</code> → Renders all items on the canvas.</li>
+        <li><code>canvas.add.text()</code> → Adds a text item.</li>
+        <li><code>canvas.add.image()</code> → Adds an image item.</li>
+        <li><code>canvas.add.sprite()</code> → Adds a sprite item.</li>
+        <li><code>canvas.add.list()</code> → Adds a list item.</li>
+        <li><code>canvas.add.piechart()</code> → Adds a pie chart item.</li>
+        <li><code>canvas.add.circle()</code> → Adds a circle item.</li>
+        <li><code>canvas.add.ellipse()</code> → Adds an ellipse item.</li>
+        <li><code>canvas.add.line()</code> → Adds a line item.</li>
+        <li><code>canvas.add.ray()</code> → Adds a ray item.</li>
+        <li><code>canvas.add.rectangle()</code> → Adds a rectangle item.</li>
+        <li><code>canvas.add.triangle()</code> → Adds a triangle item.</li>
+    </ul>
+
+    <h2>Common Item Methods</h2>
+    <ul>
+        <li><code>item.set("property", value)</code> → Sets a property value.</li>
+        <li><code>item.x</code> → Get or set the X position.</li>
+        <li><code>item.y</code> → Get or set the Y position.</li>
+        <li><code>item.width</code> → Get or set the width (if applicable).</li>
+        <li><code>item.height</code> → Get or set the height (if applicable).</li>
+        <li><code>item.boundingRectangleX()</code> → Get the X position of the bounding box.</li>
+        <li><code>item.boundingRectangleY()</code> → Get the Y position of the bounding box.</li>
+        <li><code>item.boundingRectangleWidth()</code> → Get the width of the bounding box.</li>
+        <li><code>item.boundingRectangleHeight()</code> → Get the height of the bounding box.</li>
+    </ul>
+
+    <h2>Working with Sprites</h2>
+    <p>Sprites allow selecting specific parts of an image using predefined coordinates.</p>
+
+    <pre><code>
+const sprite = canvas.add.sprite();
+sprite.set("src", "people");
+sprite.setSelectedItem("mf_wlk_biz");
+    </code></pre>
+
+    <h2>Loading Images from TaleemAssets (Optional)</h2>
+    <p>If using <code>taleem-assets</code>, preload images before assigning them.</p>
+    <pre><code>
+await assets.loadImages(["wood.jpg"]);
+const imageData = assets.getImage("wood.jpg");
+image.set("src", imageData.img.src);
+    </code></pre>
+
+    <h2>Navigation</h2>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="getting-started.html">Previous: Getting Started</a>
+    </nav>
+
+</body>
+</html>

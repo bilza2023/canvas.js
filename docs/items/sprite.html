@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprite Item - Taleem Canvas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="../index.html">Home</a> |
+        <a href="listItem.html">Next: List Item</a>
+    </nav>
+
+    <h1>Sprite Item</h1>
+    <p>The <strong>Sprite Item</strong> allows you to render a part of a sprite sheet on the canvas. It uses <code>taleem-assets</code> to fetch the sprite image and item data.</p>
+
+    <h2>Example Usage</h2>
+    <p>This example demonstrates how to add a sprite item to the canvas:</p>
+    
+    <pre><code>
+import TaleemCanvas from "taleem-canvas";
+import Assets from "taleem-assets";
+
+const assets = new Assets();
+const canvas = new TaleemCanvas("myCanvas", assets);
+const sprite = canvas.add.sprite();
+
+// Set the sprite sheet source
+sprite.set("src", "people"); // Must match an available sprite in taleem-assets
+
+// Get available sprite items
+const availableItems = sprite.getAvailableItems();
+if (availableItems.length > 0) {
+    sprite.setSelectedItem(availableItems[0]); // Select the first item by default
+}
+
+canvas.draw();
+    </code></pre>
+
+    <h2>Preview</h2>
+    <img src="../assets/images/sprite-example.png" alt="Sprite Item Example" width="400">
+
+    <h2>Available Methods</h2>
+    <ul>
+        <li><code>set("src", "people")</code> → Set the sprite sheet source.</li>
+        <li><code>getAvailableItems()</code> → Get a list of available items in the sprite.</li>
+        <li><code>setSelectedItem("itemName")</code> → Select a specific sprite item.</li>
+        <li><code>set("globalAlpha", 1)</code> → Set transparency (1 = fully visible, 0 = fully hidden).</li>
+    </ul>
+
+    <h2>Available Getters/Setters</h2>
+    <ul>
+        <li><code>x</code> → Get or set horizontal position.</li>
+        <li><code>y</code> → Get or set vertical position.</li>
+        <li><code>width</code> → Get or set sprite display width.</li>
+        <li><code>height</code> → Get or set sprite display height.</li>
+    </ul>
+
+    <h2>Bounding Box Methods</h2>
+    <ul>
+        <li><code>boundingRectangleX()</code> → Get the X position of the bounding box.</li>
+        <li><code>boundingRectangleY()</code> → Get the Y position of the bounding box.</li>
+        <li><code>boundingRectangleWidth()</code> → Get the width of the bounding box.</li>
+        <li><code>boundingRectangleHeight()</code> → Get the height of the bounding box.</li>
+    </ul>
+
+    <h2>Works Only With Assets</h2>
+    <p>The <strong>Sprite Item</strong> requires <code>taleem-assets</code> to function. It fetches the sprite sheet and item data from assets.</p>
+
+    <h2>Navigation</h2>
+    <nav>
+        <a href="../index.html">Home</a> |
+        <a href="listItem.html">Next: List Item</a>
+    </nav>
+
+</body>
+</html>

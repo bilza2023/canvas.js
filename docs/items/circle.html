@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Item - Taleem Canvas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="../index.html">Home</a> |
+        <a href="ellipse.html">Next: Ellipse Item</a>
+    </nav>
+
+    <h1>Circle Item</h1>
+    <p>The <strong>Circle Item</strong> allows you to draw a circle on the canvas with customizable size, color, and outline.</p>
+
+    <h2>Example Usage</h2>
+    <p>This example demonstrates how to add a circle item to the canvas:</p>
+    
+    <pre><code>
+import TaleemCanvas from "taleem-canvas";
+
+const canvas = new TaleemCanvas("myCanvas");
+const circle = canvas.add.circle();
+
+circle.set("radius", 50);
+circle.set("fillColor", "blue");
+circle.set("strokeColor", "black");
+circle.set("strokeWidth", 2);
+circle.set("globalAlpha", 1); // Full opacity
+
+// Set position
+circle.x = 200;
+circle.y = 200;
+
+canvas.draw();
+    </code></pre>
+
+    <h2>Preview</h2>
+    <img src="../assets/images/circle-example.png" alt="Circle Item Example" width="400">
+
+    <h2>Available Methods</h2>
+    <ul>
+        <li><code>set("radius", 50)</code> → Set the radius of the circle.</li>
+        <li><code>set("fillColor", "blue")</code> → Set the fill color.</li>
+        <li><code>set("strokeColor", "black")</code> → Set the stroke (outline) color.</li>
+        <li><code>set("strokeWidth", 2)</code> → Set the width of the stroke.</li>
+        <li><code>set("globalAlpha", 1)</code> → Set transparency (1 = fully visible, 0 = fully hidden).</li>
+    </ul>
+
+    <h2>Available Getters/Setters</h2>
+    <ul>
+        <li><code>x</code> → Get or set horizontal position.</li>
+        <li><code>y</code> → Get or set vertical position.</li>
+    </ul>
+
+    <h2>Bounding Box Methods</h2>
+    <ul>
+        <li><code>boundingRectangleX()</code> → Get the X position of the bounding box.</li>
+        <li><code>boundingRectangleY()</code> → Get the Y position of the bounding box.</li>
+        <li><code>boundingRectangleWidth()</code> → Get the width of the bounding box.</li>
+        <li><code>boundingRectangleHeight()</code> → Get the height of the bounding box.</li>
+    </ul>
+
+    <h2>Works Without Assets</h2>
+    <p>The <strong>Circle Item</strong> does not require <code>taleem-assets</code>. You can use it directly with <code>TaleemCanvas</code> without any external dependencies.</p>
+
+    <h2>Navigation</h2>
+    <nav>
+        <a href="../index.html">Home</a> |
+        <a href="ellipse.html">Next: Ellipse Item</a>
+    </nav>
+
+</body>
+</html>

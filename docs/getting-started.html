@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - Taleem Canvas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="api.html">Next: API Reference</a>
+    </nav>
+
+    <h1>Getting Started with TaleemCanvas</h1>
+    <p><strong>TaleemCanvas</strong> is a lightweight JavaScript library for drawing and managing canvas-based elements.</p>
+
+    <h2>Installation</h2>
+    <p>Install the package using npm:</p>
+    <pre><code>
+npm install taleem-canvas
+    </code></pre>
+
+    <h2>Basic Usage</h2>
+    <p>Here’s how to create a canvas and add basic elements:</p>
+
+    <pre><code>
+import TaleemCanvas from "taleem-canvas";
+
+const canvas = new TaleemCanvas("myCanvas");
+
+const text = canvas.add.text();
+text.set("text", "Hello, Taleem!");
+text.set("fontSize", 24);
+text.x = 100;
+text.y = 50;
+
+const rectangle = canvas.add.rectangle();
+rectangle.set("width", 150);
+rectangle.set("height", 100);
+rectangle.set("fillColor", "blue");
+rectangle.x = 200;
+rectangle.y = 150;
+
+canvas.draw();
+    </code></pre>
+
+    <h2>Canvas Initialization</h2>
+    <p>Create a `<canvas>` element in your HTML and provide its ID to TaleemCanvas.</p>
+    
+    <pre><code>
+&lt;canvas id="myCanvas" width="800" height="600"&gt;&lt;/canvas&gt;
+    </code></pre>
+
+    <h2>Adding Items to Canvas</h2>
+    <p>You can add various items to the canvas using the `.add` method:</p>
+    
+    <pre><code>
+const text = canvas.add.text();
+const image = canvas.add.image();
+const sprite = canvas.add.sprite();
+const list = canvas.add.list();
+const pieChart = canvas.add.piechart();
+const circle = canvas.add.circle();
+const ellipse = canvas.add.ellipse();
+const line = canvas.add.line();
+const ray = canvas.add.ray();
+const rectangle = canvas.add.rectangle();
+const triangle = canvas.add.triangle();
+    </code></pre>
+
+    <h2>Drawing the Canvas</h2>
+    <p>Once you’ve added all items, call <code>canvas.draw()</code> to render them.</p>
+    
+    <pre><code>
+canvas.draw();
+    </code></pre>
+
+    <h2>Navigation</h2>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="api.html">Next: API Reference</a>
+    </nav>
+
+</body>
+</html>

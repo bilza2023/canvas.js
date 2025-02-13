@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Item - Taleem Canvas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="../index.html">Home</a> |
+        <a href="imageItem.html">Next: Image Item</a>
+    </nav>
+
+    <h1>Text Item</h1>
+    <p>The <strong>Text Item</strong> allows you to render text on the canvas. You can set its position, color, font size, and font family.</p>
+
+    <h2>Example Usage</h2>
+    <p>This example demonstrates how to add a text item to the canvas:</p>
+    
+    <pre><code>
+import TaleemCanvas from "taleem-canvas";
+
+const canvas = new TaleemCanvas("myCanvas"); // ✅ Works without taleem-assets
+const text = canvas.add.text();
+
+text.set("text", "Hello, Taleem!");
+text.set("fontSize", 24);
+text.set("color", "white");
+text.set("fontFamily", "Arial");
+text.set("globalAlpha", 1); // Full opacity
+
+// Set position
+text.x = 100;
+text.y = 50;
+
+canvas.draw();
+    </code></pre>
+
+    <h2>Preview</h2>
+    <img src="../assets/images/text-example.png" alt="Text Item Example" width="400">
+
+    <h2>Available Methods</h2>
+    <ul>
+        <li><code>set("text", "Your text here")</code> → Set the text content.</li>
+        <li><code>set("fontSize", 24)</code> → Set font size.</li>
+        <li><code>set("color", "red")</code> → Set text color.</li>
+        <li><code>set("fontFamily", "Arial")</code> → Set font family.</li>
+        <li><code>set("globalAlpha", 1)</code> → Set transparency (1 = fully visible, 0 = fully hidden).</li>
+    </ul>
+
+    <h2>Available Getters/Setters</h2>
+    <ul>
+        <li><code>x</code> → Get or set horizontal position.</li>
+        <li><code>y</code> → Get or set vertical position.</li>
+        <li><code>width</code> → Get calculated text width (based on content and font size).</li>
+        <li><code>height</code> → Get calculated text height (measured using the letter "W").</li>
+    </ul>
+
+    <h2>Bounding Box Methods</h2>
+    <ul>
+        <li><code>boundingRectangleX()</code> → Get the X position of the bounding box.</li>
+        <li><code>boundingRectangleY()</code> → Get the Y position of the bounding box.</li>
+        <li><code>boundingRectangleWidth()</code> → Get the calculated width of the text.</li>
+        <li><code>boundingRectangleHeight()</code> → Get the calculated height of the text.</li>
+    </ul>
+
+    <h2>Works Without Assets</h2>
+    <p>The <strong>Text Item</strong> does not require <code>taleem-assets</code>. You can use it directly with <code>TaleemCanvas</code> without any external dependencies.</p>
+
+    <h2>Navigation</h2>
+    <nav>
+        <a href="../index.html">Home</a> |
+        <a href="imageItem.html">Next: Image Item</a>
+    </nav>
+
+</body>
+</html>
