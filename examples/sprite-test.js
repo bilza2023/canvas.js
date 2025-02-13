@@ -1,6 +1,6 @@
 
-import TaleemCanvas from "./user/TaleemCanvas.js";
-import Assets from "taleem-assets";
+import Assets from "../node_modules/taleem-assets/dist/taleem-assets.es.js";
+import TaleemCanvas from "../dist/taleem-canvas.js";
 
 async function run() {
     const assets = new Assets();

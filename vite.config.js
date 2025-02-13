@@ -1,11 +1,17 @@
+import { defineConfig } from "vite";
 
-export default {
-    root: ".", // Ensures Vite runs from the project root
-    server: {
-      port: 9000, // Change if needed
-    },
-    build: {
-      outDir: "dist", // Output directory
-    },
-  };
-  
+export default defineConfig({
+  root: ".", // Ensure Vite runs from the project root
+  server: {
+    port: 9000,
+  },
+  build: {
+    outDir: "dist",
+    lib: {
+      entry: "src/user/TaleemCanvas.js", // Your actual entry point
+      name: "TaleemCanvas",
+      fileName: "taleem-canvas",
+      formats: ["es", "umd"], // Support both ES Modules & UMD
+    }
+  }
+});
