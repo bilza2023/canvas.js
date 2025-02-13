@@ -1,10 +1,9 @@
-
 {
   "name": "taleem-canvas",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "type": "module",
   "exports": {
-   ".": "./dist/taleem-canvas.js"
+    ".": "./dist/taleem-canvas.js"
   },
   "scripts": {
     "dev": "vite",
@@ -19,4 +18,3 @@
     "vite": "^6.1.0"
   }
 }
-
