@@ -1,11 +1,17 @@
-### **Updated `README.md` for TaleemCanvas**  
 
-```md
 # TaleemCanvas - JavaScript Canvas Drawing Library
 
 ## Introduction
 **TaleemCanvas** is a lightweight JavaScript library for structured **drawing on an HTML5 canvas**. It provides an easy-to-use API for adding and managing graphical elements like text, shapes, images, and sprites. The library is designed for **scalability**, allowing future enhancements such as animations and user interactions.
 
+
+## Documentation
+For **detailed documentation and examples**, visit:  
+👉 **[TaleemCanvas Docs](https://bilza2023.github.io/taleem-canvas.js/)**  
+
+>The library is not fully tested and documented, wait till version 1.0 before serious use.
+
+```
 ## Installation
 Install via npm:  
 ```sh
@@ -53,11 +59,6 @@ TaleemCanvas provides the following key methods:
 
 ## Works Without External Assets
 TaleemCanvas **can be used without** external asset libraries like `taleem-assets`. However, if needed, you can preload assets separately.
-
-## Documentation
-For **detailed documentation and examples**, visit:  
-👉 **[TaleemCanvas Docs](https://bilza2023.github.io/taleem-canvas.js/)**  
-```
 
 ### **Changes Made:**
 ✅ Removed deep technical details (now covered in the online docs).  

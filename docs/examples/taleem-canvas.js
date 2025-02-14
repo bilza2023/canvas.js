@@ -65,6 +65,7 @@ class M {
     for (let r of this.items)
       r.isHit(s, a) && this.callbacks[e] && this.callbacks[e](t, r);
   }
+  // so we dynamically take callback from the user and find them to the call-back-names which are already tied to event 
   on(t, e) {
     this.callbacks[t] !== void 0 && (this.callbacks[t] = e);
   }

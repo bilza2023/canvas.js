@@ -35,7 +35,7 @@ export default class EventModule {
             }
         }
     }
-
+// so we dynamically take callback from the user and find them to the call-back-names which are already tied to event 
     on(eventType, callback) {
         if (this.callbacks[eventType] !== undefined) {
             this.callbacks[eventType] = callback;

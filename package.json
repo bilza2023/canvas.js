@@ -1,6 +1,6 @@
 {
   "name": "taleem-canvas",
-  "version": "0.9.10",
+  "version": "0.9.12",
   "type": "module",
   "exports": {
     ".": "./dist/taleem-canvas.js"
