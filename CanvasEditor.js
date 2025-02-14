@@ -1,116 +1,144 @@
+
+
 export default class CanvasEditor {
-    constructor(canvas) {
-        this.canvas = canvas;  // ✅ Reference to TaleemCanvas
-        this.selectedItem = null;
-        this.handles = [];
-        this.drag = false;
-        this.activeHandle = null;
-        this.lastMouseX = 0;
-        this.lastMouseY = 0;
+  constructor(canvas) {
+    this.canvas = canvas;  // Reference to TaleemCanvas
+    this.selectedItem = null;
+    this.handles = [];
+    this.drag = false;
+    this.activeHandle = null;
+    this.lastMouseX = 0;
+    this.lastMouseY = 0;
+    this._onMouseMoveDirect = null; // Holder for our direct mousemove listener
 
-        // Attach event listeners to the canvas
-        this.canvas.onMouse("dblclick", this.handleDoubleClick.bind(this));
-        this.canvas.onMouse("mousedown", this.handleMouseDown.bind(this));
-        this.canvas.onMouse("mousemove", this.handleMouseMove.bind(this));
-        this.canvas.onMouse("mouseup", this.handleMouseUp.bind(this));
+    // Attach event listeners
+    this.canvas.onMouse("dblclick", this.handleDoubleClick.bind(this));
+    this.canvas.onMouse("mousedown", this.handleMouseDown.bind(this));
+    this.canvas.onMouse("mouseup", this.handleMouseUp.bind(this));
+  }
+
+  // Change 1: Ignore double-clicks on handles
+  handleDoubleClick(event, item) {
+    if (item && item.type) {
+      // If the clicked item is a handle, do nothing.
+      return;
     }
-
-    handleDoubleClick(event, item) {
-        if (item) {
-            if (this.selectedItem !== item) {
-                this.clearSelection();
-            }
-            this.selectedItem = item;
-            this.createHandles();
-        } else {
-            this.clearSelection();
-        }
+    if (item) {
+      if (this.selectedItem !== item) {
+        this.clearSelection();
+      }
+      this.selectedItem = item;
+      this.createHandles();
+    } else {
+      this.clearSelection();
     }
+  }
 
-    handleMouseDown(event, item) {
-        if (!this.selectedItem) return;
+  handleMouseDown(event, item) {
+    if (!this.selectedItem) return;
 
-        for (let handle of this.handles) {
-            if (handle.isHit(event.clientX, event.clientY)) {
-                this.activeHandle = handle;
-                this.drag = true;
-                this.lastMouseX = event.clientX; // ✅ Track exact position
-                this.lastMouseY = event.clientY;
-                handle.set("color", "black");
-                return;
-            }
-        }
+    // Convert client coordinates to canvas-relative coordinates
+    const rect = this.canvas.canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
 
-        if (!item || item !== this.selectedItem) {
-            this.clearSelection();
-        }
-    }
-
-    handleMouseMove(event) {
-        if (!this.drag || !this.activeHandle) return;
-    
-        const mouseX = event.clientX;
-        const mouseY = event.clientY;
-    
-        const dx = mouseX - this.lastMouseX; // ✅ Exact delta
-        const dy = mouseY - this.lastMouseY;
-    
-        if (this.activeHandle.type === "move") {
-            this.selectedItem.x += dx;  // ✅ Moves correctly in all directions
-            this.selectedItem.y += dy;
-        } else if (this.activeHandle.type === "width") {
-            this.selectedItem.width = Math.max(10, this.selectedItem.width + dx);
-        } else if (this.activeHandle.type === "height") {
-            this.selectedItem.height = Math.max(10, this.selectedItem.height + dy);
-        }
-    
-        this.lastMouseX = mouseX; // ✅ Track exact position
+    // Check if any handle is hit and activate it
+    for (let handle of this.handles) {
+      if (handle.isHit(mouseX, mouseY)) {
+        this.activeHandle = handle;
+        this.drag = true;
+        this.lastMouseX = mouseX;
         this.lastMouseY = mouseY;
-    
-        this.createHandles();
-    }
-    
+        handle.set("color", "black");
 
-    handleMouseUp(event) {
-        this.drag = false; // ✅ Ensure drag stops
-        if (this.activeHandle) {
-            this.activeHandle.set("color", this.getHandleColor(this.activeHandle.type));
-        }
-        this.activeHandle = null;
+        // Change 3: Attach direct mousemove listener for dragging
+        this._onMouseMoveDirect = this.handleMouseMoveDirect.bind(this);
+        this.canvas.canvas.addEventListener("mousemove", this._onMouseMoveDirect);
+        return;
+      }
     }
 
-    createHandles() {
-        this.clearHandles(); 
+    if (!item || item !== this.selectedItem) {
+      this.clearSelection();
+    }
+  }
 
-        this.handles = [
-            this.createHandle(this.selectedItem.x, this.selectedItem.y, "move", "yellow"),
-            this.createHandle(this.selectedItem.x + this.selectedItem.width, this.selectedItem.y, "width", "blue"),
-            this.createHandle(this.selectedItem.x + this.selectedItem.width, this.selectedItem.y + this.selectedItem.height, "height", "purple")
-        ];
+  // Change 2: Direct mousemove handler for dragging
+  handleMouseMoveDirect(event) {
+    if (!this.drag || !this.activeHandle) return;
+
+    // Convert client coordinates to canvas-relative coordinates
+    const rect = this.canvas.canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    const dx = mouseX - this.lastMouseX;
+    const dy = mouseY - this.lastMouseY;
+
+    // Update selected item based on the active handle type
+    if (this.activeHandle.type === "move") {
+      this.selectedItem.x += dx;
+      this.selectedItem.y += dy;
+    } else if (this.activeHandle.type === "width") {
+      this.selectedItem.width = Math.max(10, this.selectedItem.width + dx);
+    } else if (this.activeHandle.type === "height") {
+      this.selectedItem.height = Math.max(10, this.selectedItem.height + dy);
     }
 
-    createHandle(x, y, type, color) {
-        const handle = this.canvas.add.rectangle();
-        handle.x = x - 7;
-        handle.y = y - 7;
-        handle.width = 15;
-        handle.height = 15;
-        handle.set("color", color);
-        handle.type = type;
-        return handle;
-    }
+    // Update last known positions and recreate handles
+    this.lastMouseX = mouseX;
+    this.lastMouseY = mouseY;
+    this.createHandles();
+  }
 
-    getHandleColor(type) {
-        return type === "move" ? "yellow" : type === "width" ? "blue" : "purple";
+  // Change 4: On mouseup, stop dragging and clear active handle
+  handleMouseUp(event) {
+    this.drag = false;
+    if (this.activeHandle) {
+      this.activeHandle.set("color", this.getHandleColor(this.activeHandle.type));
     }
+    this.activeHandle = null;
+    if (this._onMouseMoveDirect) {
+      this.canvas.canvas.removeEventListener("mousemove", this._onMouseMoveDirect);
+      this._onMouseMoveDirect = null;
+    }
+  }
 
-    clearHandles() {
-        this.handles.forEach(handle => this.canvas.remove(handle));
-        this.handles = [];
-    }
+  createHandles() {
+    this.clearHandles();
+    this.handles = [
+      this.createHandle(this.selectedItem.x, this.selectedItem.y, "move", "yellow"),
+      this.createHandle(this.selectedItem.x + this.selectedItem.width, this.selectedItem.y, "width", "blue"),
+      this.createHandle(
+        this.selectedItem.x + this.selectedItem.width,
+        this.selectedItem.y + this.selectedItem.height,
+        "height",
+        "purple"
+      )
+    ];
+  }
 
-    clearSelection() {
-        this.clearHandles();
-        this.selectedItem = null;
-    }
+  createHandle(x, y, type, color) {
+    const handle = this.canvas.add.rectangle();
+    handle.x = x - 7;
+    handle.y = y - 7;
+    handle.width = 15;
+    handle.height = 15;
+    handle.set("color", color);
+    handle.type = type;
+    return handle;
+  }
+
+  getHandleColor(type) {
+    return type === "move" ? "yellow" : type === "width" ? "blue" : "purple";
+  }
+
+  clearHandles() {
+    this.handles.forEach(handle => this.canvas.remove(handle));
+    this.handles = [];
+  }
+
+  clearSelection() {
+    this.clearHandles();
+    this.selectedItem = null;
+  }
 }

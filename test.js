@@ -39,13 +39,7 @@ async function run() {
   rect3.height = 100;
   rect3.set("color", "green");
 
-  // Continuous redraw loop for smooth rendering (like a game engine)
-  function gameLoop() {
-    canvas.draw();
-    requestAnimationFrame(gameLoop);
-  }
-  
-  gameLoop(); // Start loop
+  canvas.start();
 
   window.editor = editor; // (Optional for debugging)
 }
