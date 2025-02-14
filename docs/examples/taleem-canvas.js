@@ -795,10 +795,12 @@ class L {
   }
 }
 class C {
-  constructor(t, e = {}, i = 1e3, s = 360, a = {}) {
-    this.canvas = document.getElementById(t), this.ctx = this.canvas.getContext("2d"), this.width = i, this.height = s, this.canvas.width = this.width, this.canvas.height = this.height, this.items = [];
-    const h = new L(this.ctx, e);
-    this.add = new T(this.items, h), this.drawModule = new I(this.ctx, this.canvas, a, e), this.eventModule = new M(this.canvas, this.items), this.inputModule = new D(), this._isRunning = !1, this._frameId = null;
+  constructor(t, e, i = {}, s = [], a = {}, h = 1e3, n = 360) {
+    if (!t || !e)
+      throw console.error("TaleemCanvas requires both a canvas element and a 2D rendering context."), new Error("TaleemCanvas requires both `canvas` and `ctx`.");
+    this.canvas = t, this.ctx = e, this.width = h, this.height = n, this.canvas.width = this.width, this.canvas.height = this.height, this.items = s;
+    const r = new L(this.ctx, i);
+    this.add = new T(this.items, r), this.drawModule = new I(this.ctx, this.canvas, a, i), this.eventModule = new M(this.canvas, this.items), this.inputModule = new D(), this._isRunning = !1, this._frameId = null;
   }
   remove(t) {
     const e = this.items.findIndex((i) => i.itemExtra.uuid === t.itemExtra.uuid);

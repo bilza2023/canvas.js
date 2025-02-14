@@ -11,7 +11,7 @@ export default defineConfig({
       entry: "src/user/TaleemCanvas.js", // Your actual entry point
       name: "TaleemCanvas",
       fileName: "taleem-canvas",
-      formats: ["es", "umd"], // Support both ES Modules & UMD
+      formats: ["es"], // Support both ES Modules & UMD
     }
   }
 });

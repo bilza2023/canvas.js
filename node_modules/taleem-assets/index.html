@@ -1,71 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assets.js Test</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
-    <style>
-        body {
-            text-align: center;
-        }
-        h2 {
-            margin-top: 2rem;
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            justify-items: center;
-            padding: 10px;
-        }
-        .icon-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            padding: 10px;
-        }
-        .icon-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px 12px;
-            border-radius: 8px;
-        }
-        .image-wrapper {
-            text-align: center;
-        }
-        .image-label {
-            font-size: 12px;
-            margin-top: 5px;
-            display: block;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assets.js Test</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css" />
+  <style>
+    body {
+      text-align: center;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 15px;
+      justify-items: center;
+      padding: 10px;
+    }
+    .icon-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      padding: 10px;
+    }
+    .icon-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+    .image-wrapper {
+      text-align: center;
+    }
+    .image-label {
+      font-size: 12px;
+      margin-top: 5px;
+      display: block;
+    }
+  </style>
 </head>
 <body>
-    <h1>Assets.js Test - Displaying Assets</h1>
-    
-    <h2>Sound Control</h2>
-    <div id="sound-controls">
-        <button id="play-sound">Play Sound</button>
-        <button id="stop-sound">Stop Sound</button>
-    </div>
+  <h1>Assets.js Test - Displaying Assets</h1>
+
+  <h2>Background Images</h2>
+  <div id="bg-images" class="grid-container"></div>
 
 
-    <h2>Background Images</h2>
-    <div id="bg-images" class="grid-container"></div>
+  <h2>Icons</h2>
+  <div id="icons" class="icon-container"></div>
+  
+  <h2>Sprites</h2>
+  <div id="sprites" class="grid-container"></div>
 
-    <h2>Regular Images</h2>
-    <div id="images" class="grid-container"></div>
+  <h2>Sprite Items</h2>
+  <div id="sprite-items" class="grid-container"></div>
 
-    <h2>Sprites</h2>
-    <div id="sprites" class="grid-container"></div>
 
-    <h2>Sprite Items</h2>
-    <div id="sprite-items" class="grid-container"></div>
-
-    <h2>Icons</h2>
-    <div id="icons" class="icon-container"></div>
-
-    <script type="module" src="./test.js"></script>
+  <script type="module" src="./test.js"></script>
 </body>
 </html>

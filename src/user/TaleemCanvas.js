@@ -1,4 +1,5 @@
 
+
 import DrawModule from "../core/DrawModule.js";
 import EventModule from "../core/EventModule.js";
 import InputModule from "../core/InputModule.js";
@@ -6,15 +7,23 @@ import Add from "./Add.js";
 import Env from "../core/Env.js";
 
 export default class TaleemCanvas {
-  constructor(canvasId, assets = {}, width = 1000, height = 360, slideExtra = {}) {
-    this.canvas = document.getElementById(canvasId);
-    this.ctx = this.canvas.getContext("2d");
+  constructor(canvas, ctx, assets = {},items=[], slideExtra = {}, width = 1000, height = 360) {
+    // Ensure both `canvas` and `ctx` are provided
+    if (!canvas || !ctx) {
+      console.error("TaleemCanvas requires both a canvas element and a 2D rendering context.");
+      throw new Error("TaleemCanvas requires both `canvas` and `ctx`.");
+    }
+
+    this.canvas = canvas;
+    this.ctx = ctx;
     this.width = width;
     this.height = height;
+
+    // Preserve canvas width/height logic as requested
     this.canvas.width = this.width;
     this.canvas.height = this.height;
 
-    this.items = []; // Main drawable items.
+    this.items = items; // Main drawable items.
     const env = new Env(this.ctx, assets);
     this.add = new Add(this.items, env); // Reference to items and env.
 
