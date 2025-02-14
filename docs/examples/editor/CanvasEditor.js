@@ -1,5 +1,3 @@
-
-
 export default class CanvasEditor {
   constructor(canvas) {
     this.canvas = canvas;  // Reference to TaleemCanvas
@@ -35,6 +33,12 @@ export default class CanvasEditor {
   }
 
   handleMouseDown(event, item) {
+    // NEW: If no item is hit, clear selection and exit.
+    if (!item) {
+      this.clearSelection();
+      return;
+    }
+    
     if (!this.selectedItem) return;
 
     // Convert client coordinates to canvas-relative coordinates
@@ -51,19 +55,20 @@ export default class CanvasEditor {
         this.lastMouseY = mouseY;
         handle.set("color", "black");
 
-        // Change 3: Attach direct mousemove listener for dragging
+        // Attach direct mousemove listener for dragging
         this._onMouseMoveDirect = this.handleMouseMoveDirect.bind(this);
         this.canvas.canvas.addEventListener("mousemove", this._onMouseMoveDirect);
         return;
       }
     }
 
-    if (!item || item !== this.selectedItem) {
+    // If the clicked item is not the currently selected item, clear selection.
+    if (item !== this.selectedItem) {
       this.clearSelection();
     }
   }
 
-  // Change 2: Direct mousemove handler for dragging
+  // Direct mousemove handler for dragging
   handleMouseMoveDirect(event) {
     if (!this.drag || !this.activeHandle) return;
 
@@ -90,7 +95,7 @@ export default class CanvasEditor {
     this.createHandles();
   }
 
-  // Change 4: On mouseup, stop dragging and clear active handle
+  // On mouseup, stop dragging and clear active handle
   handleMouseUp(event) {
     this.drag = false;
     if (this.activeHandle) {

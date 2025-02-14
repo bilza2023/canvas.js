@@ -1,6 +1,23 @@
 class I {
-  constructor(t, e, i, s) {
-    this.ctx = t, this.canvas = e, this.slideExtra = i, this.assets = s;
+  constructor(t, e, i = {}, s) {
+    this.ctx = t, this.canvas = e, this.slideExtra = { ...this.getSlideExtra(), ...i }, this.assets = s;
+  }
+  getSlideExtra() {
+    return {
+      backgroundColor: "#efebb8",
+      canvasWidth: 1e3,
+      canvasHeight: 360,
+      cellHeight: 25,
+      cellWidth: 25,
+      bgImg: "black_mat",
+      bgGlobalAlpha: 1,
+      xFactor: 0,
+      yFactor: 0,
+      ///////////////////
+      showGrid: !1,
+      gridLineWidth: 1,
+      gridLineColor: "gray"
+    };
   }
   clear() {
     const { ctx: t, canvas: e, slideExtra: i } = this, s = i.backgroundColor || "gray";
@@ -27,14 +44,14 @@ class I {
     const { ctx: t, canvas: e, slideExtra: i } = this, {
       cellWidth: s = 100,
       cellHeight: a = 100,
-      gridLineWidth: r = 2,
-      gridLineColor: l = "black"
+      gridLineWidth: h = 2,
+      gridLineColor: n = "black"
     } = i;
-    t.save(), t.translate(0.5, 0.5), t.imageSmoothingEnabled = !1, t.strokeStyle = l, t.lineWidth = r;
-    for (let h = s; h < e.width; h += s)
-      t.beginPath(), t.moveTo(h, 0), t.lineTo(h, e.height), t.stroke();
-    for (let h = a; h < e.height; h += a)
-      t.beginPath(), t.moveTo(0, h), t.lineTo(e.width, h), t.stroke();
+    t.save(), t.translate(0.5, 0.5), t.imageSmoothingEnabled = !1, t.strokeStyle = n, t.lineWidth = h;
+    for (let r = s; r < e.width; r += s)
+      t.beginPath(), t.moveTo(r, 0), t.lineTo(r, e.height), t.stroke();
+    for (let r = a; r < e.height; r += a)
+      t.beginPath(), t.moveTo(0, r), t.lineTo(e.width, r), t.stroke();
     t.restore();
   }
   drawItems(t = []) {
@@ -62,10 +79,14 @@ class M {
   }
   handleEvent(t, e) {
     const i = this.canvas.getBoundingClientRect(), s = t.clientX - i.left, a = t.clientY - i.top;
-    for (let r of this.items)
-      r.isHit(s, a) && this.callbacks[e] && this.callbacks[e](t, r);
+    let h = null;
+    for (let n of this.items)
+      if (n.isHit(s, a)) {
+        h = n;
+        break;
+      }
+    this.callbacks[e] && this.callbacks[e](t, h);
   }
-  // so we dynamically take callback from the user and find them to the call-back-names which are already tied to event 
   on(t, e) {
     this.callbacks[t] !== void 0 && (this.callbacks[t] = e);
   }
@@ -87,7 +108,7 @@ class D {
     this.callbacks[t] !== void 0 && (this.callbacks[t] = e);
   }
 }
-class n {
+class l {
   constructor(t = {}, e = []) {
     this.itemExtra = t, this.dialogueBox = e;
   }
@@ -124,8 +145,8 @@ class n {
   // Standardized hit detection based on bounding rectangle.
   // Only override if an item cannot define an accurate bounding rectangle.
   isHit(t, e) {
-    const { x: i, y: s, width: a, height: r } = this.getBoundingRectangle();
-    return t >= i && t <= i + a && e >= s && e <= s + r;
+    const { x: i, y: s, width: a, height: h } = this.getBoundingRectangle();
+    return t >= i && t <= i + a && e >= s && e <= s + h;
   }
   // Basic property accessors—subclasses can override these to implement shape-specific logic.
   get x() {
@@ -161,7 +182,7 @@ class n {
       console.warn("Environment is not set for this item.");
       return;
     }
-    const s = n.env.getCanvasWidth(), a = n.env.getCanvasHeight();
+    const s = l.env.getCanvasWidth(), a = l.env.getCanvasHeight();
     switch (t) {
       case "top":
         this.x = (s - this.width) / 2 + e, this.y = 0 + i;
@@ -204,11 +225,11 @@ function o() {
     return (t === "x" ? e : e & 3 | 8).toString(16);
   });
 }
-class c extends n {
+class c extends l {
   constructor(t) {
-    super(t || c.defaultItemExtra());
+    super(t || c.itemExtraData());
   }
-  static defaultItemExtra() {
+  static itemExtraData() {
     return {
       uuid: o(),
       type: "rectangle",
@@ -228,7 +249,7 @@ class c extends n {
     t.save(), t.lineWidth = this.itemExtra.lineWidth, t.globalAlpha = this.itemExtra.globalAlpha, this.itemExtra.dash > 0 || this.itemExtra.gap > 0 ? t.setLineDash([this.itemExtra.dash, this.itemExtra.gap]) : t.setLineDash([]), this.itemExtra.filled ? (t.fillStyle = this.itemExtra.color, t.fillRect(this.x, this.y, this.width, this.height)) : (t.strokeStyle = this.itemExtra.color, t.strokeRect(this.x, this.y, this.width, this.height)), t.restore();
   }
 }
-class E extends n {
+class E extends l {
   constructor(t) {
     super(t || E.itemExtraData());
   }
@@ -279,7 +300,7 @@ class E extends n {
     t.save(), t.lineWidth = this.itemExtra.lineWidth, t.globalAlpha = this.itemExtra.globalAlpha, t.beginPath(), t.arc(this.x, this.y, this.itemExtra.radius, this.itemExtra.startAngle, this.itemExtra.endAngle), this.itemExtra.filled ? (t.fillStyle = this.itemExtra.color, t.fill()) : (t.strokeStyle = this.itemExtra.color, t.stroke()), t.restore();
   }
 }
-class b extends n {
+class b extends l {
   constructor(t) {
     super(t || b.itemExtraData());
   }
@@ -330,7 +351,7 @@ class b extends n {
     t.save(), t.lineWidth = this.itemExtra.lineWidth, t.globalAlpha = this.itemExtra.globalAlpha, t.beginPath(), t.ellipse(this.x, this.y, this.itemExtra.radiusX, this.itemExtra.radiusY, this.itemExtra.rotation, this.itemExtra.startAngle, this.itemExtra.endAngle), this.itemExtra.filled ? (t.fillStyle = this.itemExtra.color, t.fill()) : (t.strokeStyle = this.itemExtra.color, t.stroke()), t.restore();
   }
 }
-class w extends n {
+class w extends l {
   constructor(t) {
     super(t || w.itemExtraData());
   }
@@ -377,7 +398,7 @@ class w extends n {
     t.save(), t.lineWidth = this.itemExtra.lineWidth, t.globalAlpha = this.itemExtra.globalAlpha, t.strokeStyle = this.itemExtra.color, t.setLineDash([this.itemExtra.dash, this.itemExtra.gap]), t.beginPath(), t.moveTo(this.x, this.y), t.lineTo(this.x + this.width, this.y + this.height), t.stroke(), t.restore();
   }
 }
-class y extends n {
+class y extends l {
   constructor(t) {
     super(t || y.itemExtraData());
   }
@@ -428,11 +449,11 @@ class y extends n {
     t.save(), t.lineWidth = this.itemExtra.lineWidth, t.globalAlpha = this.itemExtra.globalAlpha, t.strokeStyle = this.itemExtra.color, t.fillStyle = this.itemExtra.color, t.setLineDash([this.itemExtra.dash, this.itemExtra.gap]), t.beginPath(), t.moveTo(this.x, this.y), t.lineTo(this.x + this.width, this.y + this.height), t.stroke(), this.itemExtra.startArrow && this.drawArrowHead(t, this.itemExtra.x2, this.itemExtra.y2, this.itemExtra.x1, this.itemExtra.y1), this.itemExtra.endArrow && this.drawArrowHead(t, this.itemExtra.x1, this.itemExtra.y1, this.itemExtra.x2, this.itemExtra.y2), t.restore();
   }
   drawArrowHead(t, e, i, s, a) {
-    const r = Math.atan2(a - i, s - e), l = this.itemExtra.arrowWidth, h = this.itemExtra.arrowHeight;
-    t.save(), t.translate(s, a), t.rotate(r), t.beginPath(), t.moveTo(0, 0), t.lineTo(-h, l / 2), t.lineTo(-h, -l / 2), t.closePath(), t.fill(), t.stroke(), t.restore();
+    const h = Math.atan2(a - i, s - e), n = this.itemExtra.arrowWidth, r = this.itemExtra.arrowHeight;
+    t.save(), t.translate(s, a), t.rotate(h), t.beginPath(), t.moveTo(0, 0), t.lineTo(-r, n / 2), t.lineTo(-r, -n / 2), t.closePath(), t.fill(), t.stroke(), t.restore();
   }
 }
-class p extends n {
+class p extends l {
   constructor(t) {
     super(t || p.itemExtraData());
   }
@@ -482,7 +503,7 @@ class p extends n {
     t.save(), t.lineWidth = this.itemExtra.lineWidth, t.globalAlpha = this.itemExtra.globalAlpha, t.strokeStyle = this.itemExtra.color, t.fillStyle = this.itemExtra.color, t.setLineDash([this.itemExtra.dash, this.itemExtra.gap]), t.beginPath(), t.moveTo(this.itemExtra.x1, this.itemExtra.y1), t.lineTo(this.itemExtra.x2, this.itemExtra.y2), t.lineTo(this.itemExtra.x3, this.itemExtra.y3), t.closePath(), this.itemExtra.filled && t.fill(), t.stroke(), t.restore();
   }
 }
-class v extends n {
+class v extends l {
   constructor(t) {
     super(t || v.itemExtraData());
   }
@@ -535,7 +556,7 @@ function H() {
     return (t === "x" ? e : e & 3 | 8).toString(16);
   });
 }
-class f extends n {
+class f extends l {
   constructor(t) {
     super(t || f.itemExtraData());
   }
@@ -558,8 +579,8 @@ class f extends n {
   // Instance draw method: uses the environment (this.env) to get ctx.
   draw(t, e = {}) {
     this.itemExtra.fontSize || (this.itemExtra.fontSize = 40), this.itemExtra.fontFamily || (this.itemExtra.fontFamily = "Arial"), t.save();
-    const { text: i, x: s, y: a, globalAlpha: r, color: l, fontSize: h, fontFamily: g } = this.itemExtra;
-    t.shadowOffsetX = 0, t.shadowOffsetY = 0, t.shadowBlur = 0, t.globalAlpha = r, t.fillStyle = l, t.font = `${h}px ${g}`, t.textBaseline = "top", t.fillText(i, s, a), t.restore();
+    const { text: i, x: s, y: a, globalAlpha: h, color: n, fontSize: r, fontFamily: g } = this.itemExtra;
+    t.shadowOffsetX = 0, t.shadowOffsetY = 0, t.shadowBlur = 0, t.globalAlpha = h, t.fillStyle = n, t.font = `${r}px ${g}`, t.textBaseline = "top", t.fillText(i, s, a), t.restore();
   }
   // Use the environment's text measurement function for width.
   get width() {
@@ -592,7 +613,7 @@ class f extends n {
     this.itemExtra.fontSize += t / 10, this.itemExtra.height = 0;
   }
 }
-class u extends n {
+class u extends l {
   constructor(t) {
     super(t || u.itemExtraData());
   }
@@ -617,13 +638,13 @@ class u extends n {
   }
   draw(t) {
     t.save(), t.globalAlpha = this.itemExtra.globalAlpha, t.fillStyle = this.itemExtra.color, t.font = `${this.itemExtra.fontSize}px ${this.itemExtra.fontFamily}`;
-    let { x: e, y: i, listArray: s, lineGap: a, indentation: r } = this.itemExtra, l = 0, h = this.itemExtra.fontSize + a;
+    let { x: e, y: i, listArray: s, lineGap: a, indentation: h } = this.itemExtra, n = 0, r = this.itemExtra.fontSize + a;
     s.forEach((g, m) => {
-      t.fillText(g, e + l, i + m * h), l += r;
+      t.fillText(g, e + n, i + m * r), n += h;
     }), t.restore();
   }
 }
-class A extends n {
+class A extends l {
   constructor(t) {
     super(t || A.itemExtraData());
   }
@@ -647,18 +668,18 @@ class A extends n {
   }
   draw(t) {
     t.save(), t.globalAlpha = this.itemExtra.globalAlpha;
-    let { x: e, y: i, radius: s, data: a, showLabels: r, labelFontSize: l, labelColor: h } = this.itemExtra, g = 0;
+    let { x: e, y: i, radius: s, data: a, showLabels: h, labelFontSize: n, labelColor: r } = this.itemExtra, g = 0;
     a.forEach((m) => {
       let x = m.percentage / 100 * 2 * Math.PI;
-      if (t.beginPath(), t.moveTo(e, i), t.arc(e, i, s, g, g + x), t.closePath(), t.fillStyle = m.color, t.fill(), t.stroke(), r) {
+      if (t.beginPath(), t.moveTo(e, i), t.arc(e, i, s, g, g + x), t.closePath(), t.fillStyle = m.color, t.fill(), t.stroke(), h) {
         let R = g + x / 2, S = e + Math.cos(R) * (s * 0.7), W = i + Math.sin(R) * (s * 0.7);
-        t.fillStyle = h, t.font = `${l}px Arial`, t.textAlign = "center", t.textBaseline = "middle", t.fillText(m.label, S, W);
+        t.fillStyle = r, t.font = `${n}px Arial`, t.textAlign = "center", t.textBaseline = "middle", t.fillText(m.label, S, W);
       }
       g += x;
     }), t.restore();
   }
 }
-class k extends n {
+class k extends l {
   constructor(t) {
     super(t || k.itemExtraData()), this.setDefaultSelectedItem();
   }
@@ -696,8 +717,8 @@ class k extends n {
     }
     const e = this.env.assets.getSprite(this.itemExtra.src), i = e ? e.img : null;
     if (e && !this.itemExtra.selectedItem && e.data.length > 0 && this.setSelectedItem(e.data[0].name), i && this.itemExtra.selectedItem) {
-      const { sx: s, sy: a, sw: r, sh: l } = this.itemExtra.selectedItem;
-      t.drawImage(i, s, a, r, l, this.x, this.y, this.width, this.height);
+      const { sx: s, sy: a, sw: h, sh: n } = this.itemExtra.selectedItem;
+      t.drawImage(i, s, a, h, n, this.x, this.y, this.width, this.height);
     } else
       t.fillStyle = "gray", t.fillRect(this.x, this.y, this.width, this.height), t.fillStyle = "white", t.font = "16px Arial", t.textAlign = "center", t.fillText(`${this.itemExtra.src}: not found`, this.x + this.width / 2, this.y + this.height / 2);
     t.restore();
@@ -774,13 +795,14 @@ class L {
   }
 }
 class C {
-  constructor(t, e = {}, i = 1e3, s = 360) {
+  constructor(t, e = {}, i = 1e3, s = 360, a = {}) {
     this.canvas = document.getElementById(t), this.ctx = this.canvas.getContext("2d"), this.width = i, this.height = s, this.canvas.width = this.width, this.canvas.height = this.height, this.items = [];
-    const a = new L(this.ctx, e);
-    this.add = new T(this.items, a), this.drawModule = new I(this.ctx, this.canvas, {}, {}), this.eventModule = new M(this.canvas, this.items), this.inputModule = new D();
+    const h = new L(this.ctx, e);
+    this.add = new T(this.items, h), this.drawModule = new I(this.ctx, this.canvas, a, e), this.eventModule = new M(this.canvas, this.items), this.inputModule = new D(), this._isRunning = !1, this._frameId = null;
   }
-  addItem(t) {
-    this.items.push(t), this.drawModule.draw(this.items);
+  remove(t) {
+    const e = this.items.findIndex((i) => i.itemExtra.uuid === t.itemExtra.uuid);
+    e !== -1 && (this.items.splice(e, 1), this.draw());
   }
   onMouse(t, e) {
     this.eventModule.on(t, e);
@@ -788,11 +810,22 @@ class C {
   onKey(t, e) {
     this.inputModule.on(t, e);
   }
-  clear() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  }
+  // Delegate drawing to DrawModule.
   draw() {
-    this.clear(), this.drawModule.draw(this.items);
+    this.drawModule.draw(this.items);
+  }
+  // Start the internal game loop.
+  start() {
+    if (this._isRunning) return;
+    this._isRunning = !0;
+    const t = () => {
+      this._isRunning && (this.draw(), this._frameId = requestAnimationFrame(t));
+    };
+    t();
+  }
+  // Stop the internal game loop.
+  stop() {
+    this._isRunning = !1, this._frameId && (cancelAnimationFrame(this._frameId), this._frameId = null);
   }
 }
 export {
