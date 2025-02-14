@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   root: ".", // Ensure Vite runs from the project root
   server: {
-    port: 9000,
+    port: 5173,
   },
   build: {
     outDir: "dist",

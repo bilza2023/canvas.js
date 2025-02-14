@@ -3,10 +3,10 @@ import uuid from './uuid.js';
 
 export default class Rectangle extends BaseItem {
   constructor(itemExtra) {
-    super(itemExtra || Rectangle.defaultItemExtra());
+    super(itemExtra || Rectangle.itemExtraData());
   }
 
-  static defaultItemExtra() {
+  static itemExtraData() {
     return {
       uuid: uuid(),
       type: 'rectangle',
