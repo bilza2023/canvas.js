@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Items Properties - TaleemCanvas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th:first-child, td:first-child {
+            width: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/docs/index.html">Home</a>
+    </nav>
+
+    <h1>Canvas Items Properties</h1>
+    <p>This page lists all item types available in TaleemCanvas and their customizable properties.</p>
+
+    <h2>1. Circle</h2>
+    <table>
+        <tr><th>#</th><th>Property</th><th>Description</th></tr>
+        <tr><td>1</td><td>color</td><td>Fill color.</td></tr>
+        <tr><td>2</td><td>filled</td><td>Filled or outlined.</td></tr>
+        <tr><td>3</td><td>lineWidth</td><td>Stroke thickness.</td></tr>
+        <tr><td>4</td><td>dash</td><td>Dash pattern.</td></tr>
+        <tr><td>5</td><td>gap</td><td>Dash gap.</td></tr>
+        <tr><td>6</td><td>globalAlpha</td><td>Opacity.</td></tr>
+    </table>
+
+    <h2>2. Ellipse</h2>
+    <table>
+        <tr><th>#</th><th>Property</th><th>Description</th></tr>
+        <tr><td>1</td><td>color</td><td>Fill or stroke color.</td></tr>
+        <tr><td>2</td><td>filled</td><td>Determines if the ellipse is filled.</td></tr>
+        <tr><td>3</td><td>lineWidth</td><td>Thickness of the stroke.</td></tr>
+        <tr><td>4</td><td>radiusX</td><td>Horizontal radius.</td></tr>
+        <tr><td>5</td><td>radiusY</td><td>Vertical radius.</td></tr>
+        <tr><td>6</td><td>globalAlpha</td><td>Opacity (0 to 1).</td></tr>
+    </table>
+
+    <h2>3. ImageItem</h2>
+    <table>
+        <tr><th>#</th><th>Property</th><th>Description</th></tr>
+        <tr><td>1</td><td>src</td><td>Image file name.</td></tr>
+        <tr><td>2</td><td>globalAlpha</td><td>Opacity (0 to 1).</td></tr>
+    </table>
+
+    <h2>4. Line</h2>
+    <table>
+        <tr><th>#</th><th>Property</th><th>Description</th></tr>
+        <tr><td>1</td><td>color</td><td>Line color.</td></tr>
+        <tr><td>2</td><td>lineWidth</td><td>Thickness of the line.</td></tr>
+        <tr><td>3</td><td>dash</td><td>Dash pattern length.</td></tr>
+        <tr><td>4</td><td>gap</td><td>Gap between dashes.</td></tr>
+        <tr><td>5</td><td>globalAlpha</td><td>Opacity (0 to 1).</td></tr>
+    </table>
+
+    <h2>5. List</h2>
+    <table>
+        <tr><th>#</th><th>Property</th><th>Description</th></tr>
+        <tr><td>1</td><td>listArray</td><td>Array of text items.</td></tr>
+        <tr><td>2</td><td>fontSize</td><td>Text size.</td></tr>
+        <tr><td>3</td><td>fontFamily</td><td>Font style.</td></tr>
+        <tr><td>4</td><td>color</td><td>Text color.</td></tr>
+        <tr><td>5</td><td>lineGap</td><td>Spacing between list items.</td></tr>
+        <tr><td>6</td><td>indentation</td><td>Indentation for nested items.</td></tr>
+        <tr><td>7</td><td>globalAlpha</td><td>Opacity (0 to 1).</td></tr>
+    </table>
+
+    <h2>6. Pie Chart</h2>
+<table>
+    <tr><th>#</th><th>Property</th><th>Description</th></tr>
+    <tr><td>1</td><td>radius</td><td>Pie chart size.</td></tr>
+    <tr><td>2</td><td>data</td><td>Array of slices.</td></tr>
+    <tr><td>3</td><td>showLabels</td><td>Show labels.</td></tr>
+    <tr><td>4</td><td>labelFontSize</td><td>Font size of labels.</td></tr>
+    <tr><td>5</td><td>labelColor</td><td>Label color.</td></tr>
+    <tr><td>6</td><td>globalAlpha</td><td>Opacity (0 to 1).</td></tr>
+</table>
+
+<h2>7. Ray</h2>
+<table>
+    <tr><th>#</th><th>Property</th><th>Description</th></tr>
+    <tr><td>1</td><td>color</td><td>Ray line color.</td></tr>
+    <tr><td>2</td><td>lineWidth</td><td>Thickness of the ray line.</td></tr>
+    <tr><td>3</td><td>startArrow</td><td>Show/hide start arrow.</td></tr>
+    <tr><td>4</td><td>endArrow</td><td>Show/hide end arrow.</td></tr>
+    <tr><td>5</td><td>arrowWidth</td><td>Width of the arrowhead.</td></tr>
+    <tr><td>6</td><td>arrowHeight</td><td>Height of the arrowhead.</td></tr>
+    <tr><td>7</td><td>globalAlpha</td><td>Opacity (0 to 1).</td></tr>
+</table>
+
+<h2>8. Rectangle</h2>
+<table>
+    <tr><th>#</th><th>Property</th><th>Description</th></tr>
+    <tr><td>1</td><td>color</td><td>Fill color.</td></tr>
+    <tr><td>2</td><td>filled</td><td>Filled or outlined.</td></tr>
+    <tr><td>3</td><td>lineWidth</td><td>Stroke thickness.</td></tr>
+    <tr><td>4</td><td>dash</td><td>Dash pattern.</td></tr>
+    <tr><td>5</td><td>gap</td><td>Dash gap.</td></tr>
+    <tr><td>6</td><td>globalAlpha</td><td>Opacity.</td></tr>
+</table>
+
+<h2>9. Sprite</h2>
+<table>
+    <tr><th>#</th><th>Property</th><th>Description</th></tr>
+    <tr><td>1</td><td>src</td><td>Sprite sheet source.</td></tr>
+    <tr><td>2</td><td>selectedItem</td><td>Displayed sprite.</td></tr>
+    <tr><td>3</td><td>globalAlpha</td><td>Opacity.</td></tr>
+</table>
+<h2>10. Triangle</h2>
+<table>
+    <tr><th>#</th><th>Property</th><th>Description</th></tr>
+    <tr><td>1</td><td>color</td><td>Fill or outline color.</td></tr>
+    <tr><td>2</td><td>filled</td><td>Filled or outlined.</td></tr>
+    <tr><td>3</td><td>lineWidth</td><td>Stroke thickness.</td></tr>
+    <tr><td>4</td><td>globalAlpha</td><td>Opacity (0 to 1).</td></tr>
+</table>
+
+
+
+    <h2>Navigation</h2>
+    <nav>
+        <a href="../index.html">Home</a>
+    </nav>
+
+</body>
+</html>
