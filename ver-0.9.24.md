@@ -8,6 +8,8 @@ version 0.9.24
  4. the docs/examples work with static files which is great keep them such, for dynamic examples i can use routes since the library is served from dist/taleem-canvas so routes etc makes no change to it.
  5. Next : add the addItems,clone,delete log etc
  6. Create tests.
+ 7. The taleem-assets in the docs/examples folder must be updated when required, you can update is from node_modules/taleem-assets
+ 8. there should be no taleem-assets in dist and also in normal dependencies (it is a dev dependency).
 
  Actions
  =======

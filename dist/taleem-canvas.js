@@ -1,4 +1,4 @@
-class I {
+class W {
   constructor(t, e, i = {}, s) {
     this.ctx = t, this.canvas = e, this.slideExtra = { ...this.getSlideExtra(), ...i }, this.assets = s;
   }
@@ -109,8 +109,8 @@ class D {
   }
 }
 class l {
-  constructor(t = {}, e = []) {
-    this.itemExtra = t, this.dialogueBox = e;
+  constructor(t = {}) {
+    this.itemExtra = t;
   }
   // Subclasses should override this to provide their default properties.
   static itemExtraData() {
@@ -503,9 +503,9 @@ class p extends l {
     t.save(), t.lineWidth = this.itemExtra.lineWidth, t.globalAlpha = this.itemExtra.globalAlpha, t.strokeStyle = this.itemExtra.color, t.fillStyle = this.itemExtra.color, t.setLineDash([this.itemExtra.dash, this.itemExtra.gap]), t.beginPath(), t.moveTo(this.itemExtra.x1, this.itemExtra.y1), t.lineTo(this.itemExtra.x2, this.itemExtra.y2), t.lineTo(this.itemExtra.x3, this.itemExtra.y3), t.closePath(), this.itemExtra.filled && t.fill(), t.stroke(), t.restore();
   }
 }
-class v extends l {
+class f extends l {
   constructor(t) {
-    super(t || v.itemExtraData());
+    super(t || f.itemExtraData());
   }
   static itemExtraData() {
     return {
@@ -556,9 +556,9 @@ function H() {
     return (t === "x" ? e : e & 3 | 8).toString(16);
   });
 }
-class f extends l {
+class v extends l {
   constructor(t) {
-    super(t || f.itemExtraData());
+    super(t || v.itemExtraData());
   }
   // Default properties remain static.
   static itemExtraData() {
@@ -579,8 +579,8 @@ class f extends l {
   // Instance draw method: uses the environment (this.env) to get ctx.
   draw(t, e = {}) {
     this.itemExtra.fontSize || (this.itemExtra.fontSize = 40), this.itemExtra.fontFamily || (this.itemExtra.fontFamily = "Arial"), t.save();
-    const { text: i, x: s, y: a, globalAlpha: h, color: n, fontSize: r, fontFamily: g } = this.itemExtra;
-    t.shadowOffsetX = 0, t.shadowOffsetY = 0, t.shadowBlur = 0, t.globalAlpha = h, t.fillStyle = n, t.font = `${r}px ${g}`, t.textBaseline = "top", t.fillText(i, s, a), t.restore();
+    const { text: i, x: s, y: a, globalAlpha: h, color: n, fontSize: r, fontFamily: m } = this.itemExtra;
+    t.shadowOffsetX = 0, t.shadowOffsetY = 0, t.shadowBlur = 0, t.globalAlpha = h, t.fillStyle = n, t.font = `${r}px ${m}`, t.textBaseline = "top", t.fillText(i, s, a), t.restore();
   }
   // Use the environment's text measurement function for width.
   get width() {
@@ -639,8 +639,8 @@ class u extends l {
   draw(t) {
     t.save(), t.globalAlpha = this.itemExtra.globalAlpha, t.fillStyle = this.itemExtra.color, t.font = `${this.itemExtra.fontSize}px ${this.itemExtra.fontFamily}`;
     let { x: e, y: i, listArray: s, lineGap: a, indentation: h } = this.itemExtra, n = 0, r = this.itemExtra.fontSize + a;
-    s.forEach((g, m) => {
-      t.fillText(g, e + n, i + m * r), n += h;
+    s.forEach((m, g) => {
+      t.fillText(m, e + n, i + g * r), n += h;
     }), t.restore();
   }
 }
@@ -668,14 +668,14 @@ class A extends l {
   }
   draw(t) {
     t.save(), t.globalAlpha = this.itemExtra.globalAlpha;
-    let { x: e, y: i, radius: s, data: a, showLabels: h, labelFontSize: n, labelColor: r } = this.itemExtra, g = 0;
-    a.forEach((m) => {
-      let x = m.percentage / 100 * 2 * Math.PI;
-      if (t.beginPath(), t.moveTo(e, i), t.arc(e, i, s, g, g + x), t.closePath(), t.fillStyle = m.color, t.fill(), t.stroke(), h) {
-        let R = g + x / 2, S = e + Math.cos(R) * (s * 0.7), W = i + Math.sin(R) * (s * 0.7);
-        t.fillStyle = r, t.font = `${n}px Arial`, t.textAlign = "center", t.textBaseline = "middle", t.fillText(m.label, S, W);
+    let { x: e, y: i, radius: s, data: a, showLabels: h, labelFontSize: n, labelColor: r } = this.itemExtra, m = 0;
+    a.forEach((g) => {
+      let x = g.percentage / 100 * 2 * Math.PI;
+      if (t.beginPath(), t.moveTo(e, i), t.arc(e, i, s, m, m + x), t.closePath(), t.fillStyle = g.color, t.fill(), t.stroke(), h) {
+        let R = m + x / 2, S = e + Math.cos(R) * (s * 0.7), I = i + Math.sin(R) * (s * 0.7);
+        t.fillStyle = r, t.font = `${n}px Arial`, t.textAlign = "center", t.textBaseline = "middle", t.fillText(g.label, S, I);
       }
-      g += x;
+      m += x;
     }), t.restore();
   }
 }
@@ -769,11 +769,11 @@ class T {
     return t.env = this.env, this.items.push(t), t;
   }
   image() {
-    const t = new v();
+    const t = new f();
     return t.env = this.env, this.items.push(t), t;
   }
   text() {
-    const t = new f();
+    const t = new v();
     return t.env = this.env, this.items.push(t), t;
   }
 }
@@ -800,11 +800,7 @@ class C {
       throw console.error("TaleemCanvas requires both a canvas element and a 2D rendering context."), new Error("TaleemCanvas requires both `canvas` and `ctx`.");
     this.canvas = t, this.ctx = e, this.width = h, this.height = n, this.canvas.width = this.width, this.canvas.height = this.height, this.items = s;
     const r = new L(this.ctx, i);
-    this.add = new T(this.items, r), this.drawModule = new I(this.ctx, this.canvas, a, i), this.eventModule = new M(this.canvas, this.items), this.inputModule = new D(), this._isRunning = !1, this._frameId = null;
-  }
-  remove(t) {
-    const e = this.items.findIndex((i) => i.itemExtra.uuid === t.itemExtra.uuid);
-    e !== -1 && (this.items.splice(e, 1), this.draw());
+    this.add = new T(this.items, r), this.drawModule = new W(this.ctx, this.canvas, a, i), this.eventModule = new M(this.canvas, this.items), this.inputModule = new D(), this._isRunning = !1, this._frameId = null;
   }
   onMouse(t, e) {
     this.eventModule.on(t, e);
@@ -812,11 +808,9 @@ class C {
   onKey(t, e) {
     this.inputModule.on(t, e);
   }
-  // Delegate drawing to DrawModule.
   draw() {
     this.drawModule.draw(this.items);
   }
-  // Start the internal game loop.
   start() {
     if (this._isRunning) return;
     this._isRunning = !0;
@@ -825,9 +819,49 @@ class C {
     };
     t();
   }
-  // Stop the internal game loop.
   stop() {
     this._isRunning = !1, this._frameId && (cancelAnimationFrame(this._frameId), this._frameId = null);
+  }
+  // Add an array of itemExtra objects to the canvas.
+  // Checks that each has a "type" field, and adds a uuid if missing.
+  addItems(t) {
+    for (let e of t) {
+      if (!e.type)
+        throw console.error("Item extra data missing 'type' field:", e), new Error("Missing 'type' field in itemExtra.");
+      if (e.uuid || (e.uuid = o()), typeof this.add[e.type] != "function")
+        throw console.error(`No Add method found for type: ${e.type}`), new Error(`No Add method for type: ${e.type}`);
+      let i = this.add[e.type]();
+      i.itemExtra = e;
+    }
+    this.draw();
+  }
+  // Delete a single item using the item (BaseItem object).
+  deleteItem(t) {
+    const e = this.items.findIndex((i) => i.itemExtra.uuid === t.itemExtra.uuid);
+    e !== -1 && (this.items.splice(e, 1), this.draw());
+  }
+  // Remove all items.
+  deleteAllItems() {
+    this.items.splice(0, this.items.length), this.draw();
+  }
+  // Clone an item: deep copy its itemExtra, generate a new uuid,
+  // then create a new item using the appropriate Add.js method.
+  cloneItem(t) {
+    const e = JSON.parse(JSON.stringify(t.itemExtra));
+    if (e.uuid = o(), !e.type)
+      throw console.error("Original item missing type for clone:", t), new Error("Missing 'type' in original item's itemExtra.");
+    if (typeof this.add[e.type] != "function")
+      throw console.error(`No Add method for type: ${e.type}`), new Error(`No Add method for type: ${e.type}`);
+    let i = this.add[e.type]();
+    return i.itemExtra = e, this.draw(), i;
+  }
+  // Log the itemExtra data to the console.
+  logItem(t) {
+    console.log(t.itemExtra);
+  }
+  // Save returns an array of itemExtra objects that can be used with addItems.
+  save() {
+    return this.items.map((t) => t.itemExtra);
   }
 }
 export {

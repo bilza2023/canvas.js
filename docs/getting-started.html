@@ -3,18 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Getting Started - Taleem Canvas</title>
+    <title>Getting Started - TaleemCanvas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
 </head>
 <body>
 
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="api.html">Next: API Reference</a>
-    </nav>
+    <p style="font-size: small;">Last updated: February 15, 2025</p>
 
     <h1>Getting Started with TaleemCanvas</h1>
-    <p><strong>TaleemCanvas</strong> is a lightweight JavaScript library for drawing and managing canvas-based elements.</p>
+    <p><strong>TaleemCanvas</strong> is a lightweight JavaScript library for drawing and managing canvas-based elements, particularly useful for creating educational presentations.</p>
 
     <h2>Installation</h2>
     <p>Install the package using npm:</p>
@@ -23,12 +20,14 @@ npm install taleem-canvas
     </code></pre>
 
     <h2>Basic Usage</h2>
-    <p>Here’s how to create a canvas and add basic elements:</p>
+    <p>Here’s how to initialize a canvas and add basic elements:</p>
 
     <pre><code>
 import TaleemCanvas from "taleem-canvas";
 
-const canvas = new TaleemCanvas("myCanvas");
+const canvasElement = document.getElementById("myCanvas");
+const ctx = canvasElement.getContext("2d");
+const canvas = new TaleemCanvas(canvasElement, ctx);
 
 const text = canvas.add.text();
 text.set("text", "Hello, Taleem!");
@@ -39,7 +38,7 @@ text.y = 50;
 const rectangle = canvas.add.rectangle();
 rectangle.set("width", 150);
 rectangle.set("height", 100);
-rectangle.set("fillColor", "blue");
+rectangle.set("color", "blue");
 rectangle.x = 200;
 rectangle.y = 150;
 
@@ -47,7 +46,7 @@ canvas.draw();
     </code></pre>
 
     <h2>Canvas Initialization</h2>
-    <p>Create a `<canvas>` element in your HTML and provide its ID to TaleemCanvas.</p>
+    <p>Create a <code>&lt;canvas&gt;</code> element in your HTML and provide its reference when initializing TaleemCanvas.</p>
     
     <pre><code>
 &lt;canvas id="myCanvas" width="800" height="600"&gt;&lt;/canvas&gt;
@@ -78,10 +77,15 @@ canvas.draw();
     </code></pre>
 
     <h2>Navigation</h2>
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="api.html">Next: API Reference</a>
-    </nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="api.html">Next: API Reference</a></li>
+    </ul>
+
+    <footer>
+        <p>&copy; 2024 TaleemCanvas. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>
+

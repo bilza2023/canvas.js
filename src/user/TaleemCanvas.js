@@ -4,6 +4,7 @@ import InputModule from "../core/InputModule.js";
 import Add from "./Add.js";
 import Env from "../core/Env.js";
 import uuid from "../items/uuid.js"; // Used to generate unique IDs
+import loadImages from "./loadImages.js";
 
 export default class TaleemCanvas {
   constructor(canvas, ctx, assets = {}, items = [], slideExtra = {}, width = 1000, height = 360) {
@@ -31,6 +32,9 @@ export default class TaleemCanvas {
     this._frameId = null;
   }
 
+ async loadImages(imagesArray=[]){
+  this.images =  await loadImages(imagesArray);
+ }
 
   onMouse(eventType, callback) {
     this.eventModule.on(eventType, callback);

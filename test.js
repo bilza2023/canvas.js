@@ -1,89 +1,71 @@
 
+
 import Assets from "taleem-assets";
 import TaleemCanvas from "./index.js";
 import loadImages from "./loadImages.js";
-async function run() {
+
+let canvas;
+let addedItems = []; // Store references to added items
+
+async function init() {
+    console.log("🔹 Initializing TaleemCanvas...");
+
     const assets = new Assets();
-  
-    assets.images = await loadImages(['/images/scene.png'])
+    assets.images = await loadImages(['/images/scene.png']);
+
     const canvasElement = document.getElementById("myCanvas");
     const ctx = canvasElement.getContext("2d");
-    const canvas = new TaleemCanvas(canvasElement, ctx, assets);
-    canvas.assets = assets; // ✅ Ensure assets are properly assigned
+    canvas = new TaleemCanvas(canvasElement, ctx, assets);
+    canvas.assets = assets;
 
-    // Add heading text
-    const heading = canvas.add.text();
-    heading.x = 400;
-    heading.y = 50;
-    heading.set("text", "Welcome to the Presentation");
-    heading.color = "black";
-    heading.fontSize = 32;
-    heading.fontFamily = "Arial";
+    console.log("✅ Canvas initialized");
 
-    // Add main display image under the heading
-    const mainImage = canvas.add.image();
-    mainImage.x = 300;
-    mainImage.y = 120;
-    mainImage.set("src", "scene.png");
-    mainImage.width = 600;
-    mainImage.height = 250;
-
-    // Add a list
-    const list = canvas.add.list();
-    list.x = 100;
-    list.y = 100;
-    list.set("listArray", ["First item", "Second item", "Third item"]);
-    list.set("fontSize", 20);
-    list.set("fontFamily", "Arial");
-    list.set("color", "red");
-    list.set("lineGap", 5);
-    list.set("indentation", 5);
-
-    // Add a PieChart
-    const pieChart = canvas.add.piechart();
-    pieChart.x = 500;
-    pieChart.y = 180;
-    pieChart.set("radius", 80);
-    pieChart.set("data", [
-        { label: "A", percentage: 5, color: "red" },
-        { label: "B", percentage: 15, color: "blue" },
-        { label: "C", percentage: 80, color: "green" }
-    ]);
-    pieChart.set("showLabels", true);
-    pieChart.set("labelFontSize", 14);
-    pieChart.set("labelColor", "black");
-
-    // ✅ Correctly retrieve sprite sheets
-    const availableSprites = canvas.assets.spritesList;
-    if (availableSprites.length === 0) {
-        console.error("No sprite sheets available.");
-    } else {
-        console.log("Available sprite sheets:", availableSprites);
-
-        // Create a Sprite
-        const sprite = canvas.add.sprite();
-        sprite.x = 100;
-        sprite.y = 100;
-
-        // Set the first available sprite sheet
-        const selectedSpriteSheet = availableSprites[0];
-        sprite.set("src", selectedSpriteSheet);
-
-        // Get available items for the selected sprite sheet
-        const spriteObject = canvas.assets.getSprite(selectedSpriteSheet);
-        const availableItems = spriteObject.getItemNames();
-
-        if (availableItems.length === 0) {
-            console.error(`No items found in sprite sheet: ${selectedSpriteSheet}`);
-        } else {
-            console.log(`Available items in ${selectedSpriteSheet}:`, availableItems);
-
-            // Change the displayed sprite item dynamically
-            sprite.setSelectedItem(availableItems[1]); // ✅ Change to another sprite item
-        }
-    }
-
-    canvas.draw();
+    // Attach event listeners
+    document.getElementById("addText").addEventListener("click", addTextItem);
+    document.getElementById("addImage").addEventListener("click", addImageItem);
+    document.getElementById("deleteLast").addEventListener("click", deleteLastItem);
 }
 
-await run();
+// ✅ Adds a text item to the canvas
+function addTextItem() {
+    const textItem = canvas.add.text();
+    textItem.x = Math.random() * 800;
+    textItem.y = Math.random() * 300;
+    textItem.set("text", "New Text");
+    textItem.color = "black";
+    textItem.fontSize = 24;
+    textItem.fontFamily = "Arial";
+
+    addedItems.push(textItem); // Store reference
+    canvas.draw();
+    console.log("✅ Added Text Item:", textItem.itemExtra);
+}
+
+// ✅ Adds an image item to the canvas
+function addImageItem() {
+    const imageItem = canvas.add.image();
+    imageItem.x = Math.random() * 800;
+    imageItem.y = Math.random() * 300;
+    imageItem.set("src", "scene.png");
+    imageItem.width = 150;
+    imageItem.height = 100;
+
+    addedItems.push(imageItem); // Store reference
+    canvas.draw();
+    console.log("✅ Added Image Item:", imageItem.itemExtra);
+}
+
+// ✅ Deletes the last added item
+function deleteLastItem() {
+    if (addedItems.length === 0) {
+        console.warn("⚠️ No items to delete.");
+        return;
+    }
+    const lastItem = addedItems.pop(); // Get last added item
+    canvas.deleteItem(lastItem);
+    canvas.draw();
+    console.log("✅ Deleted Last Item");
+}
+
+// Run test setup
+await init();

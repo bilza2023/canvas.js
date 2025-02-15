@@ -24,16 +24,16 @@ import TaleemCanvas from "taleem-canvas";
 const canvas = new TaleemCanvas("myCanvas");
 const triangle = canvas.add.triangle();
 
-triangle.set("width", 150);
-triangle.set("height", 120);
-triangle.set("fillColor", "yellow");
-triangle.set("strokeColor", "black");
-triangle.set("strokeWidth", 2);
+triangle.set("x1", 100);
+triangle.set("y1", 100);
+triangle.set("x2", 50);
+triangle.set("y2", 200);
+triangle.set("x3", 200);
+triangle.set("y3", 200);
+triangle.set("color", "red");
+triangle.set("filled", false);
+triangle.set("lineWidth", 2);
 triangle.set("globalAlpha", 1); // Full opacity
-
-// Set position
-triangle.x = 200;
-triangle.y = 150;
 
 canvas.draw();
     </code></pre>
@@ -43,18 +43,17 @@ canvas.draw();
 
     <h2>Available Methods</h2>
     <ul>
-        <li><code>set("fillColor", "yellow")</code> → Set the fill color.</li>
-        <li><code>set("strokeColor", "black")</code> → Set the stroke (outline) color.</li>
-        <li><code>set("strokeWidth", 2)</code> → Set the width of the stroke.</li>
+        <li><code>set("color", "red")</code> → Set the fill or outline color.</li>
+        <li><code>set("filled", true/false)</code> → Determines if the triangle is filled or just an outline.</li>
+        <li><code>set("lineWidth", 2)</code> → Set the width of the stroke.</li>
         <li><code>set("globalAlpha", 1)</code> → Set transparency (1 = fully visible, 0 = fully hidden).</li>
     </ul>
 
     <h2>Available Getters/Setters</h2>
     <ul>
-        <li><code>x</code> → Get or set horizontal position.</li>
-        <li><code>y</code> → Get or set vertical position.</li>
-        <li><code>width</code> → Get or set triangle width.</li>
-        <li><code>height</code> → Get or set triangle height.</li>
+        <li><code>x1</code>, <code>y1</code> → Get or set the first vertex position.</li>
+        <li><code>x2</code>, <code>y2</code> → Get or set the second vertex position.</li>
+        <li><code>x3</code>, <code>y3</code> → Get or set the third vertex position.</li>
     </ul>
 
     <h2>Bounding Box Methods</h2>

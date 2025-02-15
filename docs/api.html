@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Reference - Taleem Canvas</title>
+    <title>API Reference - TaleemCanvas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
 </head>
 <body>
+
+    <p style="font-size: small;">Last updated: February 15, 2025</p>
 
     <nav>
         <a href="index.html">Home</a> |
@@ -14,12 +16,45 @@
     </nav>
 
     <h1>API Reference</h1>
-    <p>This page provides a detailed reference for all available methods in <strong>TaleemCanvas</strong>.</p>
+    <p>This page provides a detailed reference for all available methods and properties in <strong>TaleemCanvas</strong>.</p>
 
-    <h2>TaleemCanvas Methods</h2>
+    <h2>Creating a TaleemCanvas Instance</h2>
+    <p>To start using TaleemCanvas, create an instance with a reference to an existing `<canvas>` element and its 2D context:</p>
+    <pre><code>
+const canvasElement = document.getElementById("myCanvas");
+const ctx = canvasElement.getContext("2d");
+const canvas = new TaleemCanvas(canvasElement, ctx);
+    </code></pre>
+
+    <h2>Core Methods</h2>
     <ul>
-        <li><code>new TaleemCanvas(canvasId)</code> → Creates a new canvas instance.</li>
         <li><code>canvas.draw()</code> → Renders all items on the canvas.</li>
+        <li><code>canvas.start()</code> → Starts the animation loop.</li>
+        <li><code>canvas.stop()</code> → Stops the animation loop.</li>
+        <li><code>canvas.addItems(itemExtrasArray)</code> → Adds an array of item configurations.</li>
+        <li><code>canvas.deleteItem(item)</code> → Removes a specific item.</li>
+        <li><code>canvas.deleteAllItems()</code> → Clears all items from the canvas.</li>
+        <li><code>canvas.cloneItem(item)</code> → Creates a copy of an existing item.</li>
+        <li><code>canvas.save()</code> → Returns an array of item configurations for saving.</li>
+    </ul>
+
+    <h2>Event Handling</h2>
+    <p>TaleemCanvas allows users to listen to mouse and keyboard events on the canvas.</p>
+    <pre><code>
+canvas.onMouse("click", (event, item) => {
+    if (item) {
+        console.log("Clicked on item:", item);
+    }
+});
+
+canvas.onKey("keydown", (event) => {
+    console.log("Key pressed:", event.key);
+});
+    </code></pre>
+
+    <h2>Adding Items</h2>
+    <p>Use the `.add` method to create and add items dynamically.</p>
+    <ul>
         <li><code>canvas.add.text()</code> → Adds a text item.</li>
         <li><code>canvas.add.image()</code> → Adds an image item.</li>
         <li><code>canvas.add.sprite()</code> → Adds a sprite item.</li>
@@ -33,34 +68,25 @@
         <li><code>canvas.add.triangle()</code> → Adds a triangle item.</li>
     </ul>
 
-    <h2>Common Item Methods</h2>
+    <h2>Item Properties</h2>
+    <p>Each item has customizable properties:</p>
     <ul>
-        <li><code>item.set("property", value)</code> → Sets a property value.</li>
+        <li><code>item.set("property", value)</code> → Updates a property value.</li>
         <li><code>item.x</code> → Get or set the X position.</li>
         <li><code>item.y</code> → Get or set the Y position.</li>
-        <li><code>item.width</code> → Get or set the width (if applicable).</li>
-        <li><code>item.height</code> → Get or set the height (if applicable).</li>
-        <li><code>item.boundingRectangleX()</code> → Get the X position of the bounding box.</li>
-        <li><code>item.boundingRectangleY()</code> → Get the Y position of the bounding box.</li>
-        <li><code>item.boundingRectangleWidth()</code> → Get the width of the bounding box.</li>
-        <li><code>item.boundingRectangleHeight()</code> → Get the height of the bounding box.</li>
+        <li><code>item.width</code> → Get or set the width.</li>
+        <li><code>item.height</code> → Get or set the height.</li>
+        <li><code>item.boundingRectangleX()</code> → Get X coordinate of bounding box.</li>
+        <li><code>item.boundingRectangleY()</code> → Get Y coordinate of bounding box.</li>
+        <li><code>item.boundingRectangleWidth()</code> → Get bounding box width.</li>
+        <li><code>item.boundingRectangleHeight()</code> → Get bounding box height.</li>
     </ul>
 
-    <h2>Working with Sprites</h2>
-    <p>Sprites allow selecting specific parts of an image using predefined coordinates.</p>
-
+    <h2>Saving & Loading Items</h2>
+    <p>You can save the current state of the canvas and restore it later:</p>
     <pre><code>
-const sprite = canvas.add.sprite();
-sprite.set("src", "people");
-sprite.setSelectedItem("mf_wlk_biz");
-    </code></pre>
-
-    <h2>Loading Images from TaleemAssets (Optional)</h2>
-    <p>If using <code>taleem-assets</code>, preload images before assigning them.</p>
-    <pre><code>
-await assets.loadImages(["wood.jpg"]);
-const imageData = assets.getImage("wood.jpg");
-image.set("src", imageData.img.src);
+const savedData = canvas.save();
+canvas.addItems(savedData);
     </code></pre>
 
     <h2>Navigation</h2>
@@ -69,5 +95,10 @@ image.set("src", imageData.img.src);
         <a href="getting-started.html">Previous: Getting Started</a>
     </nav>
 
+    <footer>
+        <p>&copy; 2024 TaleemCanvas. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>
+

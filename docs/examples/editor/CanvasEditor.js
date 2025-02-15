@@ -138,7 +138,7 @@ export default class CanvasEditor {
   }
 
   clearHandles() {
-    this.handles.forEach(handle => this.canvas.remove(handle));
+    this.handles.forEach(handle => this.canvas.deleteItem(handle));
     this.handles = [];
   }
 

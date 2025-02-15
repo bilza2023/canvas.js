@@ -1,47 +1,46 @@
+
+
 import Assets from "../taleem-assets.js";
 import TaleemCanvas from "../taleem-canvas.js";
-import CanvasEditor from "./CanvasEditor.js"; 
+import CanvasEditor from "./CanvasEditor.js";
+// import loadImages from "./src/utils/loadImages.js";
 
 async function run() {
-  const assets = new Assets();
-  // Optionally, provide a custom slideExtra object here:
-  const customSlideExtra = {
-    showGrid: true,
-    gridLineColor: "lightgray",
-    gridLineWidth: 0.5,
-    backgroundColor: "#efebb8"
-  };
+    const assets = new Assets();
 
-  const canvas = new TaleemCanvas("myCanvas", assets, 1000, 360, customSlideExtra);
-  canvas.backgroundColor = "#5e0a0a";
-  
-  const editor = new CanvasEditor(canvas); 
+    const canvasElement = document.getElementById("myCanvas");
+    const ctx = canvasElement.getContext("2d");
+    const canvas = new TaleemCanvas(canvasElement, ctx, assets);
+    canvas.assets = assets;
 
-  // Add three rectangles
-  const rect1 = canvas.add.rectangle();
-  rect1.x = 50;
-  rect1.y = 50;
-  rect1.width = 100;
-  rect1.height = 80;
-  rect1.set("color", "red");
+    // Add a background color
+    canvas.backgroundColor = "#5e0a0a";
 
-  const rect2 = canvas.add.rectangle();
-  rect2.x = 200;
-  rect2.y = 100;
-  rect2.width = 120;
-  rect2.height = 90;
-  rect2.set("color", "blue");
+    // Add three rectangles
+    const rect1 = canvas.add.rectangle();
+    rect1.x = 50;
+    rect1.y = 50;
+    rect1.width = 100;
+    rect1.height = 80;
+    rect1.set("color", "red");
 
-  const rect3 = canvas.add.rectangle();
-  rect3.x = 400;
-  rect3.y = 150;
-  rect3.width = 140;
-  rect3.height = 100;
-  rect3.set("color", "green");
+    const rect2 = canvas.add.rectangle();
+    rect2.x = 200;
+    rect2.y = 100;
+    rect2.width = 120;
+    rect2.height = 90;
+    rect2.set("color", "blue");
 
-  canvas.start();
+    const rect3 = canvas.add.rectangle();
+    rect3.x = 400;
+    rect3.y = 150;
+    rect3.width = 140;
+    rect3.height = 100;
+    rect3.set("color", "green");
 
-  window.editor = editor; // (Optional for debugging)
+    // Start rendering
+    canvas.start();
+    let canvasEditor = new CanvasEditor(canvas);
 }
 
 await run();

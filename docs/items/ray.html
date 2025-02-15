@@ -3,73 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ray Item - Taleem Canvas</title>
+    <title>Ray Item - TaleemCanvas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
 </head>
 <body>
-
-    <nav>
-        <a href="../index.html">Home</a> |
-        <a href="rectangle.html">Next: Rectangle Item</a>
-    </nav>
-
     <h1>Ray Item</h1>
-    <p>The <strong>Ray Item</strong> allows you to draw a ray that starts at a point and extends infinitely in a specified direction.</p>
+    <p>The <code>Ray</code> class is used to draw a directional line with optional arrowheads.</p>
 
-    <h2>Example Usage</h2>
-    <p>This example demonstrates how to add a ray item to the canvas:</p>
-    
-    <pre><code>
-import TaleemCanvas from "taleem-canvas";
-
-const canvas = new TaleemCanvas("myCanvas");
+    <h2>Usage</h2>
+    <pre><code>// Creating a Ray Item
 const ray = canvas.add.ray();
-
-ray.set("angle", 45);  // Angle of the ray in degrees
-ray.set("strokeColor", "green");
-ray.set("strokeWidth", 3);
-ray.set("globalAlpha", 1); // Full opacity
-
-// Set starting position
-ray.x = 150;
-ray.y = 150;
-
-canvas.draw();
-    </code></pre>
-
-    <h2>Preview</h2>
-    <img src="../assets/images/ray-example.png" alt="Ray Item Example" width="400">
-
-    <h2>Available Methods</h2>
+ray.x1 = 150;
+ray.y1 = 150;
+ray.x2 = 350;
+ray.y2 = 250;
+ray.set("color", "red");
+ray.set("lineWidth", 2);
+ray.set("startArrow", true);
+ray.set("endArrow", true);</code></pre>
+    
+    <h2>Available Properties</h2>
     <ul>
-        <li><code>set("angle", 45)</code> → Set the angle of the ray in degrees.</li>
-        <li><code>set("strokeColor", "green")</code> → Set the stroke (line) color.</li>
-        <li><code>set("strokeWidth", 3)</code> → Set the width of the stroke.</li>
-        <li><code>set("globalAlpha", 1)</code> → Set transparency (1 = fully visible, 0 = fully hidden).</li>
+        <li><code>x1</code> - X-coordinate of the starting point.</li>
+        <li><code>y1</code> - Y-coordinate of the starting point.</li>
+        <li><code>x2</code> - X-coordinate of the ending point.</li>
+        <li><code>y2</code> - Y-coordinate of the ending point.</li>
+        <li><code>arrowWidth</code> - Width of the arrowhead.</li>
+        <li><code>arrowHeight</code> - Height of the arrowhead.</li>
+        <li><code>startArrow</code> - Boolean to show/hide the start arrow.</li>
+        <li><code>endArrow</code> - Boolean to show/hide the end arrow.</li>
+        <li><code>lineWidth</code> - Thickness of the ray line.</li>
+        <li><code>color</code> - Color of the ray line.</li>
+        <li><code>globalAlpha</code> - Opacity level of the ray (0 to 1).</li>
     </ul>
 
-    <h2>Available Getters/Setters</h2>
+    <h2>Example</h2>
+    <img src="../assets/images/ray.png" alt="Ray Item Example">
+
+    <h2>Methods</h2>
     <ul>
-        <li><code>x</code> → Get or set the starting X position.</li>
-        <li><code>y</code> → Get or set the starting Y position.</li>
+        <li><code>set(key, value)</code> - Updates the given property.</li>
     </ul>
 
-    <h2>Bounding Box Methods</h2>
-    <ul>
-        <li><code>boundingRectangleX()</code> → Get the X position of the bounding box.</li>
-        <li><code>boundingRectangleY()</code> → Get the Y position of the bounding box.</li>
-        <li><code>boundingRectangleWidth()</code> → Get the width of the bounding box.</li>
-        <li><code>boundingRectangleHeight()</code> → Get the height of the bounding box.</li>
-    </ul>
-
-    <h2>Works Without Assets</h2>
-    <p>The <strong>Ray Item</strong> does not require <code>taleem-assets</code>. You can use it directly with <code>TaleemCanvas</code> without any external dependencies.</p>
-
-    <h2>Navigation</h2>
-    <nav>
-        <a href="../index.html">Home</a> |
-        <a href="rectangle.html">Next: Rectangle Item</a>
-    </nav>
-
+    <p><a href="../index.html">Home</a></p>
 </body>
 </html>

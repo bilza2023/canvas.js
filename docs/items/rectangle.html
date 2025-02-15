@@ -3,77 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rectangle Item - Taleem Canvas</title>
+    <title>Rectangle Item - TaleemCanvas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
 </head>
 <body>
 
+    <p style="font-size: small;">Last updated: February 15, 2025</p>
+
     <nav>
-        <a href="../index.html">Home</a> |
-        <a href="triangle.html">Next: Triangle Item</a>
+        <a href="index.html">Home</a> |
+        <a href="api.html">API Reference</a>
     </nav>
 
     <h1>Rectangle Item</h1>
-    <p>The <strong>Rectangle Item</strong> allows you to draw a rectangle on the canvas with customizable size, color, and outline.</p>
+    <p>The <strong>Rectangle</strong> item in TaleemCanvas allows users to draw rectangular shapes with customizable properties such as position, size, stroke width, and color.</p>
 
-    <h2>Example Usage</h2>
-    <p>This example demonstrates how to add a rectangle item to the canvas:</p>
-    
+    <h2>Creating a Rectangle</h2>
     <pre><code>
-import TaleemCanvas from "taleem-canvas";
-
-const canvas = new TaleemCanvas("myCanvas");
 const rectangle = canvas.add.rectangle();
-
+rectangle.x = 100;
+rectangle.y = 100;
 rectangle.set("width", 150);
 rectangle.set("height", 100);
-rectangle.set("fillColor", "orange");
-rectangle.set("strokeColor", "black");
-rectangle.set("strokeWidth", 2);
-rectangle.set("globalAlpha", 1); // Full opacity
-
-// Set position
-rectangle.x = 200;
-rectangle.y = 150;
-
+rectangle.set("color", "blue");
+rectangle.set("lineWidth", 2);
+rectangle.set("filled", true);
 canvas.draw();
     </code></pre>
 
-    <h2>Preview</h2>
-    <img src="../assets/images/rectangle-example.png" alt="Rectangle Item Example" width="400">
-
-    <h2>Available Methods</h2>
+    <h2>Rectangle Properties</h2>
     <ul>
-        <li><code>set("fillColor", "orange")</code> → Set the fill color.</li>
-        <li><code>set("strokeColor", "black")</code> → Set the stroke (outline) color.</li>
-        <li><code>set("strokeWidth", 2)</code> → Set the width of the stroke.</li>
-        <li><code>set("globalAlpha", 1)</code> → Set transparency (1 = fully visible, 0 = fully hidden).</li>
+        <li><code>rectangle.x</code> → Get or set the X position.</li>
+        <li><code>rectangle.y</code> → Get or set the Y position.</li>
+        <li><code>rectangle.set("width", value)</code> → Set the width of the rectangle.</li>
+        <li><code>rectangle.set("height", value)</code> → Set the height of the rectangle.</li>
+        <li><code>rectangle.set("color", value)</code> → Set the stroke or fill color.</li>
+        <li><code>rectangle.set("lineWidth", value)</code> → Set the stroke width.</li>
+        <li><code>rectangle.set("filled", true/false)</code> → Determines if the rectangle is filled or just an outline.</li>
+        <li><code>rectangle.globalAlpha</code> → Adjust the transparency level.</li>
     </ul>
 
-    <h2>Available Getters/Setters</h2>
-    <ul>
-        <li><code>x</code> → Get or set horizontal position.</li>
-        <li><code>y</code> → Get or set vertical position.</li>
-        <li><code>width</code> → Get or set rectangle width.</li>
-        <li><code>height</code> → Get or set rectangle height.</li>
-    </ul>
+    <h2>Bounding Box</h2>
+    <p>The bounding box of a rectangle is determined by its width and height:</p>
+    <pre><code>
+const width = rectangle.boundingRectangleWidth();
+const height = rectangle.boundingRectangleHeight();
+    </code></pre>
 
-    <h2>Bounding Box Methods</h2>
-    <ul>
-        <li><code>boundingRectangleX()</code> → Get the X position of the bounding box.</li>
-        <li><code>boundingRectangleY()</code> → Get the Y position of the bounding box.</li>
-        <li><code>boundingRectangleWidth()</code> → Get the width of the bounding box.</li>
-        <li><code>boundingRectangleHeight()</code> → Get the height of the bounding box.</li>
-    </ul>
-
-    <h2>Works Without Assets</h2>
-    <p>The <strong>Rectangle Item</strong> does not require <code>taleem-assets</code>. You can use it directly with <code>TaleemCanvas</code> without any external dependencies.</p>
+    <h2>Example</h2>
+    <p>Below is an example of adding a filled green rectangle to the canvas:</p>
+    <pre><code>
+const rectangle = canvas.add.rectangle();
+rectangle.x = 250;
+rectangle.y = 200;
+rectangle.set("width", 200);
+rectangle.set("height", 120);
+rectangle.set("color", "green");
+rectangle.set("filled", true);
+canvas.draw();
+    </code></pre>
 
     <h2>Navigation</h2>
     <nav>
-        <a href="../index.html">Home</a> |
-        <a href="triangle.html">Next: Triangle Item</a>
+        <a href="index.html">Home</a> |
+        <a href="api.html">API Reference</a>
     </nav>
+
+    <footer>
+        <p>&copy; 2024 TaleemCanvas. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaleemCanvas Documentation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
+</head>
+<body>
+
+    <p style="font-size: small;">Last updated: February 15, 2025</p>
+
+    <h1>TaleemCanvas Documentation</h1>
+    <p>Welcome to the official documentation for <strong>TaleemCanvas</strong>, a JavaScript library designed for creating slides specially educational slides on html5 canvas. TaleemCanvas allows users to use images, sprites etc with ease.</p>
+
+    <h2>What is TaleemCanvas?</h2>
+    <p>TaleemCanvas is built around the concept of <strong>drawable items</strong>. Users can add, delete, and modify different graphical elements to compose interactive presentations. At this time, the library provides basic drawing capabilities, including:</p>
+    <ul>
+        <li>Shapes: Circle, Rectangle, Ellipse, Triangle, Line, Ray</li>
+        <li>Text</li>
+        <li>Images</li>
+        <li>Lists</li>
+        <li>Pie Charts</li>
+        <li>Sprites</li>
+    </ul>
+
+    <h2>Integration with Taleem Assets</h2>
+    <p>TaleemCanvas is designed to work with <strong>Taleem Assets</strong>, a bundle that provides icons, background images, sprites, and other assets. While TaleemCanvas can be used independently, features like images, sprites, and background images will not function without Taleem Assets.</p>
+
+    <h2>Available Items</h2>
+    <ul>
+        <li><a href="items/textItem.html">Text Item</a></li>
+        <li><a href="items/imageItem.html">Image Item</a></li>
+        <li><a href="items/sprite.html">Sprite Item</a></li>
+        <li><a href="items/list.html">List Item</a></li>
+        <li><a href="items/piechart.html">Pie Chart Item</a></li>
+        <li><a href="items/circle.html">Circle Item</a></li>
+        <li><a href="items/ellipse.html">Ellipse Item</a></li>
+        <li><a href="items/line.html">Line Item</a></li>
+        <li><a href="items/ray.html">Ray Item</a></li>
+        <li><a href="items/rectangle.html">Rectangle Item</a></li>
+        <li><a href="items/triangle.html">Triangle Item</a></li>
+    </ul>
+
+    <h2>Controlling the Canvas</h2>
+    <p>TaleemCanvas provides event-handling capabilities to allow user interaction. For example, you can listen for mouse events using the following method:</p>
+    <pre><code>
+    onMouse(eventType, callback) {
+        this.eventModule.on(eventType, callback);
+    }
+    </code></pre>
+    <p>For more details, visit the <a href="event-handling.html">Event Handling</a> page.</p>
+
+    <h2>Navigation</h2>
+    <ul>
+        <li><a href="getting-started.html">Getting Started</a></li>
+        <li><a href="api.html">API Reference</a></li>
+    </ul>
+
+    <h2>Examples</h2>
+    <ul>
+        <li><a href="./examples/first_example/index.html">Basic Example</a></li>
+        <li><a href="./examples/sprite_example/index.html">Sprite Example</a></li>
+    </ul>
+
+    <footer>
+        <p>&copy; 2024 TaleemCanvas. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
+

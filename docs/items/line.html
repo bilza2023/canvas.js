@@ -3,75 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Line Item - Taleem Canvas</title>
+    <title>Line Item - TaleemCanvas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
 </head>
 <body>
-
-    <nav>
-        <a href="../index.html">Home</a> |
-        <a href="ray.html">Next: Ray Item</a>
-    </nav>
-
     <h1>Line Item</h1>
-    <p>The <strong>Line Item</strong> allows you to draw a straight line on the canvas between two points.</p>
+    <p>The <code>Line</code> class is used to draw straight lines between two points.</p>
 
-    <h2>Example Usage</h2>
-    <p>This example demonstrates how to add a line item to the canvas:</p>
-    
-    <pre><code>
-import TaleemCanvas from "taleem-canvas";
-
-const canvas = new TaleemCanvas("myCanvas");
+    <h2>Usage</h2>
+    <pre><code>// Creating a Line Item
 const line = canvas.add.line();
-
-line.set("x2", 300);  // X coordinate of the end point
-line.set("y2", 200);  // Y coordinate of the end point
-line.set("strokeColor", "red");
-line.set("strokeWidth", 3);
-line.set("globalAlpha", 1); // Full opacity
-
-// Set starting position
-line.x = 100;
-line.y = 100;
-
-canvas.draw();
-    </code></pre>
-
-    <h2>Preview</h2>
-    <img src="../assets/images/line-example.png" alt="Line Item Example" width="400">
-
-    <h2>Available Methods</h2>
+line.x1 = 50;
+line.y1 = 50;
+line.x2 = 200;
+line.y2 = 200;
+line.set("color", "blue");
+line.set("lineWidth", 2);</code></pre>
+    
+    <h2>Available Properties</h2>
     <ul>
-        <li><code>set("x2", 300)</code> → Set the X coordinate of the end point.</li>
-        <li><code>set("y2", 200)</code> → Set the Y coordinate of the end point.</li>
-        <li><code>set("strokeColor", "red")</code> → Set the stroke (line) color.</li>
-        <li><code>set("strokeWidth", 3)</code> → Set the width of the stroke.</li>
-        <li><code>set("globalAlpha", 1)</code> → Set transparency (1 = fully visible, 0 = fully hidden).</li>
+        <li><code>x1</code> - X-coordinate of the start point.</li>
+        <li><code>y1</code> - Y-coordinate of the start point.</li>
+        <li><code>x2</code> - X-coordinate of the end point.</li>
+        <li><code>y2</code> - Y-coordinate of the end point.</li>
+        <li><code>lineWidth</code> - Thickness of the line.</li>
+        <li><code>color</code> - Color of the line.</li>
+        <li><code>globalAlpha</code> - Opacity level of the line (0 to 1).</li>
     </ul>
 
-    <h2>Available Getters/Setters</h2>
+    <h2>Example</h2>
+    <img src="../assets/images/line.png" alt="Line Item Example">
+
+    <h2>Methods</h2>
     <ul>
-        <li><code>x</code> → Get or set the starting X position.</li>
-        <li><code>y</code> → Get or set the starting Y position.</li>
+        <li><code>set(key, value)</code> - Updates the given property.</li>
+        <li><code>boundingRectangleX()</code> - Returns the bounding X position.</li>
+        <li><code>boundingRectangleY()</code> - Returns the bounding Y position.</li>
+        <li><code>boundingRectangleWidth()</code> - Returns the bounding width.</li>
+        <li><code>boundingRectangleHeight()</code> - Returns the bounding height.</li>
     </ul>
 
-    <h2>Bounding Box Methods</h2>
-    <ul>
-        <li><code>boundingRectangleX()</code> → Get the X position of the bounding box.</li>
-        <li><code>boundingRectangleY()</code> → Get the Y position of the bounding box.</li>
-        <li><code>boundingRectangleWidth()</code> → Get the width of the bounding box.</li>
-        <li><code>boundingRectangleHeight()</code> → Get the height of the bounding box.</li>
-    </ul>
-
-    <h2>Works Without Assets</h2>
-    <p>The <strong>Line Item</strong> does not require <code>taleem-assets</code>. You can use it directly with <code>TaleemCanvas</code> without any external dependencies.</p>
-
-    <h2>Navigation</h2>
-    <nav>
-        <a href="../index.html">Home</a> |
-        <a href="ray.html">Next: Ray Item</a>
-    </nav>
-
+    <p><a href="../index.html">Home</a></p>
 </body>
 </html>

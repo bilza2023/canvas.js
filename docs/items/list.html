@@ -3,72 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List Item - Taleem Canvas</title>
+    <title>List Item - TaleemCanvas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
 </head>
 <body>
-
-    <nav>
-        <a href="../index.html">Home</a> |
-        <a href="circleItem.html">Next: Circle Item</a>
-    </nav>
-
     <h1>List Item</h1>
-    <p>The <strong>List Item</strong> allows you to display a list of text items on the canvas with indentation and line spacing.</p>
+    <p>The <code>List</code> class is used to display a list of text items with customizable properties.</p>
 
-    <h2>Example Usage</h2>
-    <p>This example demonstrates how to add a list item to the canvas:</p>
-    
-    <pre><code>
-import TaleemCanvas from "taleem-canvas";
-
-const canvas = new TaleemCanvas("myCanvas");
+    <h2>Usage</h2>
+    <pre><code>// Creating a List Item
 const list = canvas.add.list();
-
-list.set("listArray", [
-    "First item",
-    "Second item",
-    "Third item"
-]);
-list.set("fontSize", 20);
-list.set("fontFamily", "Arial");
-list.set("color", "black");
-list.set("lineGap", 5);
-list.set("indentation", 5);
-
-// Set position
 list.x = 100;
 list.y = 100;
-
-canvas.draw();
-    </code></pre>
-
-    <h2>Preview</h2>
-    <img src="../assets/images/list-example.png" alt="List Item Example" width="400">
-
-    <h2>Available Methods</h2>
+list.set("listArray", ["Item 1", "Item 2", "Item 3"]);
+list.set("fontSize", 20);
+list.set("color", "black");</code></pre>
+    
+    <h2>Available Properties</h2>
     <ul>
-        <li><code>set("listArray", [...])</code> → Set the array of text items.</li>
-        <li><code>set("fontSize", 20)</code> → Set the font size.</li>
-        <li><code>set("fontFamily", "Arial")</code> → Set the font family.</li>
-        <li><code>set("color", "black")</code> → Set the text color.</li>
-        <li><code>set("lineGap", 5)</code> → Set the gap between lines.</li>
-        <li><code>set("indentation", 5)</code> → Set indentation for each new line.</li>
-        <li><code>set("globalAlpha", 1)</code> → Set transparency (1 = fully visible, 0 = fully hidden).</li>
+        <li><code>x</code> - X-coordinate of the list.</li>
+        <li><code>y</code> - Y-coordinate of the list.</li>
+        <li><code>listArray</code> - Array of list items.</li>
+        <li><code>fontSize</code> - Size of the text.</li>
+        <li><code>fontFamily</code> - Font family used.</li>
+        <li><code>color</code> - Color of the text.</li>
+        <li><code>lineGap</code> - Spacing between list items.</li>
+        <li><code>indentation</code> - Indentation for nested items.</li>
+        <li><code>globalAlpha</code> - Opacity level of the list (0 to 1).</li>
     </ul>
 
-    <h2>Available Getters/Setters</h2>
+    <h2>Example</h2>
+    <img src="../assets/images/list.png" alt="List Item Example">
+
+    <h2>Methods</h2>
     <ul>
-        <li><code>x</code> → Get or set horizontal position.</li>
-        <li><code>y</code> → Get or set vertical position.</li>
+        <li><code>set(key, value)</code> - Updates the given property.</li>
+        <li><code>boundingRectangleX()</code> - Returns the bounding X position.</li>
+        <li><code>boundingRectangleY()</code> - Returns the bounding Y position.</li>
+        <li><code>boundingRectangleWidth()</code> - Returns the bounding width.</li>
+        <li><code>boundingRectangleHeight()</code> - Returns the bounding height.</li>
     </ul>
 
-    <h2>Bounding Box Methods</h2>
-    <ul>
-        <li><code>boundingRectangleX()</code> → Get the X position of the bounding box.</li>
-        <li><code>boundingRectangleY()</code> → Get the Y position of the bounding box.</li>
-        <li><code>boundingRectangleWidth()</code> → Get the width of the bounding box.</li>
-        <li><code>boundingRectangleHeight()</code> → Get the height of the bounding box.</li>
-    </ul>
-
-    <h2>Works Without Assets</h2
+    <p><a href="../index.html">Home</a></p>
+</body>
+</html>

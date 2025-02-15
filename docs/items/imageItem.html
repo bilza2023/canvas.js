@@ -3,73 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Item - Taleem Canvas</title>
+    <title>Image Item - TaleemCanvas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
 </head>
 <body>
-
-    <nav>
-        <a href="../index.html">Home</a> |
-        <a href="spriteItem.html">Next: Sprite Item</a>
-    </nav>
-
     <h1>Image Item</h1>
-    <p>The <strong>Image Item</strong> allows you to render images on the canvas. You can set the source, position, and size.</p>
+    <p>The <code>ImageItem</code> class is used to display images within <code>TaleemCanvas</code>. Images are referenced by their source file name and loaded from the provided assets.</p>
 
-    <h2>Example Usage</h2>
-    <p>This example demonstrates how to add an image item to the canvas:</p>
-    
-    <pre><code>
-import TaleemCanvas from "taleem-canvas";
-
-const canvas = new TaleemCanvas("myCanvas");
+    <h2>Usage</h2>
+    <pre><code>// Creating an Image Item
 const image = canvas.add.image();
-
-image.set("src", "wood.jpg");
-image.set("globalAlpha", 1); // Full opacity
-
-// Set position and size
-image.x = 50;
-image.y = 50;
+image.set("src", "example.jpg");
+image.x = 100;
+image.y = 100;
 image.width = 200;
-image.height = 200;
-
-canvas.draw();
-    </code></pre>
-
-    <h2>Preview</h2>
-    <img src="../assets/images/image-example.png" alt="Image Item Example" width="400">
-
-    <h2>Available Methods</h2>
+image.height = 200;</code></pre>
+    
+    <h2>Available Properties</h2>
     <ul>
-        <li><code>set("src", "image.jpg")</code> → Set the image source.</li>
-        <li><code>set("globalAlpha", 1)</code> → Set transparency (1 = fully visible, 0 = fully hidden).</li>
+        <li><code>x</code> - X-coordinate of the image.</li>
+        <li><code>y</code> - Y-coordinate of the image.</li>
+        <li><code>width</code> - Width of the image.</li>
+        <li><code>height</code> - Height of the image.</li>
+        <li><code>src</code> - Source filename of the image (must be available in assets).</li>
+        <li><code>globalAlpha</code> - Opacity level of the image (0 to 1).</li>
     </ul>
 
-    <h2>Available Getters/Setters</h2>
+    <h2>Example</h2>
+    <img src="../assets/images/imageItem.png" alt="Image Item Example">
+
+    <h2>Rendering</h2>
+    <p>The <code>draw</code> method attempts to retrieve the image from the asset manager. If the image is missing, a placeholder gray rectangle with an error message is displayed.</p>
+
+    <h2>Methods</h2>
     <ul>
-        <li><code>x</code> → Get or set horizontal position.</li>
-        <li><code>y</code> → Get or set vertical position.</li>
-        <li><code>width</code> → Get or set image width.</li>
-        <li><code>height</code> → Get or set image height.</li>
+        <li><code>set(key, value)</code> - Updates the given property.</li>
+        <li><code>boundingRectangleX()</code> - Returns the bounding X position.</li>
+        <li><code>boundingRectangleY()</code> - Returns the bounding Y position.</li>
+        <li><code>boundingRectangleWidth()</code> - Returns the bounding width.</li>
+        <li><code>boundingRectangleHeight()</code> - Returns the bounding height.</li>
     </ul>
 
-    <h2>Bounding Box Methods</h2>
-    <ul>
-        <li><code>boundingRectangleX()</code> → Get the X position of the bounding box.</li>
-        <li><code>boundingRectangleY()</code> → Get the Y position of the bounding box.</li>
-        <li><code>boundingRectangleWidth()</code> → Get the width of the bounding box.</li>
-        <li><code>boundingRectangleHeight()</code> → Get the height of the bounding box.</li>
-    </ul>
-
-    <h2>Works Without Assets</h2>
-    <p>The <strong>Image Item</strong> does not require <code>taleem-assets</code>. You can use it directly with <code>TaleemCanvas</code> without any external dependencies.</p>
-
-    <h2>Navigation</h2>
-    <nav>
-        <a href="../index.html">Home</a> |
-        <a href="spriteItem.html">Next: Sprite Item</a>
-    </nav>
-
+    <p><a href="../index.html">Home</a></p>
 </body>
 </html>
