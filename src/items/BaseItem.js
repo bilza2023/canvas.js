@@ -3,9 +3,8 @@
 export default class BaseItem {
 
 
-  constructor(itemExtra = {}, dialogueBox = []) {
+  constructor(itemExtra = {}, ) {
     this.itemExtra = itemExtra;
-    this.dialogueBox = dialogueBox;
   }
 
   
