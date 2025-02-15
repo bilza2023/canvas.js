@@ -6,12 +6,14 @@ async function testAddItems() {
     console.log("🔹 Running addItems() Test...");
 
     const assets = new Assets();
-    assets.images = await loadImages(['../assets/images/scene.png']);
-
+    
     const canvasElement = document.getElementById("myCanvas");
     const ctx = canvasElement.getContext("2d");
+    
     const canvas = new TaleemCanvas(canvasElement, ctx, assets);
-    canvas.assets = assets; 
+
+    await canvas.loadImages(['../assets/images/scene.png']);
+    // canvas.assets = assets; 
 
     console.log("✅ Canvas initialized");
 

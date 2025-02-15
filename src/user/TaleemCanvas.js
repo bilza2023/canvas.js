@@ -4,10 +4,10 @@ import InputModule from "../core/InputModule.js";
 import Add from "./Add.js";
 import Env from "../core/Env.js";
 import uuid from "../items/uuid.js"; // Used to generate unique IDs
-import loadImages from "./loadImages.js";
+import loadImagesLocal from "./loadImagesLocal.js";
 
 export default class TaleemCanvas {
-  constructor(canvas, ctx, assets = {}, items = [], slideExtra = {}, width = 1000, height = 360) {
+  constructor(canvas, ctx, assets = null, slideExtra = {}, width = 1000, height = 360) {
     if (!canvas || !ctx) {
       console.error("TaleemCanvas requires both a canvas element and a 2D rendering context.");
       throw new Error("TaleemCanvas requires both `canvas` and `ctx`.");
@@ -15,12 +15,13 @@ export default class TaleemCanvas {
 
     this.canvas = canvas;
     this.ctx = ctx;
+    this.assets = assets; // may be this is wrong
     this.width = width;
     this.height = height;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
 
-    this.items = items;
+    this.items = [];
     const env = new Env(this.ctx, assets);
     this.add = new Add(this.items, env); // Use Add.js as a wrapper for creating new items
 
@@ -33,7 +34,10 @@ export default class TaleemCanvas {
   }
 
  async loadImages(imagesArray=[]){
-  this.images =  await loadImages(imagesArray);
+  if(this.assets){
+    this.assets.images =  await loadImagesLocal(imagesArray);
+    return true;
+  }else {return false;}
  }
 
   onMouse(eventType, callback) {
@@ -67,26 +71,15 @@ export default class TaleemCanvas {
     }
   }
 
-  // Add an array of itemExtra objects to the canvas.
-  // Checks that each has a "type" field, and adds a uuid if missing.
   addItems(itemExtrasArray) {
-    for (let extra of itemExtrasArray) {
-      if (!extra.type) {
-        console.error("Item extra data missing 'type' field:", extra);
-        throw new Error("Missing 'type' field in itemExtra.");
-      }
-      if (!extra.uuid) {
-        extra.uuid = uuid();
-      }
-      if (typeof this.add[extra.type] !== "function") {
-        console.error(`No Add method found for type: ${extra.type}`);
-        throw new Error(`No Add method for type: ${extra.type}`);
-      }
+
+    for (let i = 0; i < itemExtrasArray.length; i++) {
+      const extra =   itemExtrasArray[i];
       let item = this.add[extra.type]();
-      // Overwrite the default itemExtra with the provided data.
-      item.itemExtra = extra;
+      item.itemExtra = extra; 
     }
     this.draw();
+   
   }
 
   // Delete a single item using the item (BaseItem object).

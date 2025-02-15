@@ -1,5 +1,6 @@
 
-export default async function loadImages(imagesUrlArray) {
+
+export default async function loadImagesLocal(imagesUrlArray) {
   if (typeof window === "undefined") {
     return new Map(); // Return an empty map during SSR
   }
