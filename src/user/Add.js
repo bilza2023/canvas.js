@@ -18,10 +18,18 @@ export default class Add {
 
     sprite() {
         const item = new Sprite();
-        item.env = this.env ;
+        item.env = this.env;
         this.items.push(item);
         return item;
     }
+
+    image() {
+        const item = new ImageItem();
+        item.env = this.env;
+        this.items.push(item);
+        return item;
+    }
+
     piechart() {
         const item = new Piechart();
         item.env = this.env ;
@@ -77,13 +85,6 @@ export default class Add {
 
     triangle() {
         const item = new Triangle();
-        item.env = this.env ;
-        this.items.push(item);
-        return item;
-    }
-
-    image() {
-        const item = new ImageItem();
         item.env = this.env ;
         this.items.push(item);
         return item;

@@ -2,39 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Canvas Drawable Items Test</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css">
   <style>
     body {
-      text-align: center;
-    }
-    .toolbar {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 10px;
+      margin: 0;
+      padding: 0;
     }
     canvas {
       border: 1px solid black;
-      background-color: #222; /* Slightly lighter than Water.css dark */
+      background-color: #333; /* Dark gray */
     }
   </style>
 </head>
 <body>
-
-  <!-- 🔹 Toolbar (Buttons at the Top) -->
-  <div class="toolbar">
-    <button id="addText">Add Text</button>
-    <button id="addImage">Add Image</button>
-    <button id="deleteLast">Delete Last Item</button>
-  </div>
-
-  <!-- 🔹 Canvas (Below Toolbar) -->
   <canvas id="myCanvas" width="1000" height="360"></canvas>
-
-  <!-- 🔹 JavaScript -->
-  <script type="module" src="./test.js"></script>
-
+  <script type="module" src="./image-sprite-test.js"></script>
 </body>
 </html>

@@ -24,7 +24,7 @@ export default class ImageItem extends BaseItem {
         ctx.globalAlpha = this.itemExtra.globalAlpha;
     
         // ✅ Get the correct image from assets Map
-        const imageObj = this.env.assets.getImage(this.itemExtra.src);
+        const imageObj = this.env.getImage(this.itemExtra.src);
         const image = imageObj ? imageObj.img : null;
     
         if (image) {

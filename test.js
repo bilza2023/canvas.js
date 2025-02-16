@@ -1,71 +1,64 @@
-
-
 import Assets from "taleem-assets";
 import TaleemCanvas from "./index.js";
-import loadImages from "./loadImages.js";
+import loadImages from "./src/utils/loadImages.js";
 
-let canvas;
-let addedItems = []; // Store references to added items
-
-async function init() {
-    console.log("🔹 Initializing TaleemCanvas...");
-
-    const assets = new Assets();
-    assets.images = await loadImages(['/images/scene.png']);
-
+async function run() {
+    // const assets = new Assets();
+    
     const canvasElement = document.getElementById("myCanvas");
     const ctx = canvasElement.getContext("2d");
-    canvas = new TaleemCanvas(canvasElement, ctx, assets);
-    canvas.assets = assets;
+    const canvas = new TaleemCanvas(canvasElement, ctx, assets);
 
-    console.log("✅ Canvas initialized");
+    // ✅ Ensure assets exist before adding image and sprite
+    if (assets) {
+        // Add main display image under the heading
+        const mainImage = canvas.add.image();
+        if (mainImage) {
+            mainImage.x = 300;
+            mainImage.y = 120;
+            mainImage.set("src", "scene.png");
+            mainImage.width = 600;
+            mainImage.height = 250;
+        }
 
-    // Attach event listeners
-    document.getElementById("addText").addEventListener("click", addTextItem);
-    document.getElementById("addImage").addEventListener("click", addImageItem);
-    document.getElementById("deleteLast").addEventListener("click", deleteLastItem);
-}
+        // ✅ Correctly retrieve sprite sheets
+        const availableSprites = assets.spritesList || [];
+        if (availableSprites.length === 0) {
+            console.warn("No sprite sheets available.");
+        } else {
+            console.log("Available sprite sheets:", availableSprites);
 
-// ✅ Adds a text item to the canvas
-function addTextItem() {
-    const textItem = canvas.add.text();
-    textItem.x = Math.random() * 800;
-    textItem.y = Math.random() * 300;
-    textItem.set("text", "New Text");
-    textItem.color = "black";
-    textItem.fontSize = 24;
-    textItem.fontFamily = "Arial";
+            // Create a Sprite
+            const sprite = canvas.add.sprite();
+            if (sprite) {
+                sprite.x = 100;
+                sprite.y = 100;
 
-    addedItems.push(textItem); // Store reference
-    canvas.draw();
-    console.log("✅ Added Text Item:", textItem.itemExtra);
-}
+                // Set the first available sprite sheet
+                const selectedSpriteSheet = availableSprites[0];
+                sprite.set("src", selectedSpriteSheet);
 
-// ✅ Adds an image item to the canvas
-function addImageItem() {
-    const imageItem = canvas.add.image();
-    imageItem.x = Math.random() * 800;
-    imageItem.y = Math.random() * 300;
-    imageItem.set("src", "scene.png");
-    imageItem.width = 150;
-    imageItem.height = 100;
+                // ✅ Use `canvas.getSprite()` instead of direct asset access
+                const spriteObject = canvas.getSprite(selectedSpriteSheet);
+                if (!spriteObject) {
+                    console.error(`Sprite sheet not found: ${selectedSpriteSheet}`);
+                    return;
+                }
 
-    addedItems.push(imageItem); // Store reference
-    canvas.draw();
-    console.log("✅ Added Image Item:", imageItem.itemExtra);
-}
-
-// ✅ Deletes the last added item
-function deleteLastItem() {
-    if (addedItems.length === 0) {
-        console.warn("⚠️ No items to delete.");
-        return;
+                const availableItems = spriteObject.getItemNames();
+                if (availableItems.length === 0) {
+                    console.warn(`No items found in sprite sheet: ${selectedSpriteSheet}`);
+                } else {
+                    console.log(`Available items in ${selectedSpriteSheet}:`, availableItems);
+                    sprite.setSelectedItem(availableItems[1]); // ✅ Change to another sprite item
+                }
+            }
+        }
+    } else {
+        console.warn("Skipping image and sprite creation: No assets provided.");
     }
-    const lastItem = addedItems.pop(); // Get last added item
-    canvas.deleteItem(lastItem);
+
     canvas.draw();
-    console.log("✅ Deleted Last Item");
 }
 
-// Run test setup
-await init();
+await run();

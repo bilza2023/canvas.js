@@ -1,11 +1,14 @@
 
 export default class DrawModule {
-  constructor(ctx, canvas, incomingSlideExtra = {}, assets) {
+  constructor(ctx, canvas, slideExtra = null) {
     this.ctx = ctx;
     this.canvas = canvas;
     // Merge default slideExtra with the incoming one:
-    this.slideExtra = { ...this.getSlideExtra(), ...incomingSlideExtra };
-    this.assets = assets;
+    if(slideExtra == null){
+      this.slideExtra = this.getSlideExtra();
+    }else{
+      this.slideExtra = slideExtra;
+    }
   }
 
   getSlideExtra(){

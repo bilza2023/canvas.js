@@ -1,3 +1,4 @@
+
 import DrawModule from "../core/DrawModule.js";
 import EventModule from "../core/EventModule.js";
 import InputModule from "../core/InputModule.js";
@@ -7,7 +8,7 @@ import uuid from "../items/uuid.js"; // Used to generate unique IDs
 import loadImagesLocal from "./loadImagesLocal.js";
 
 export default class TaleemCanvas {
-  constructor(canvas, ctx, assets = null, slideExtra = {}, width = 1000, height = 360) {
+  constructor(canvas, ctx, slideExtra = {} ,env=null) {
     if (!canvas || !ctx) {
       console.error("TaleemCanvas requires both a canvas element and a 2D rendering context.");
       throw new Error("TaleemCanvas requires both `canvas` and `ctx`.");
@@ -15,31 +16,35 @@ export default class TaleemCanvas {
 
     this.canvas = canvas;
     this.ctx = ctx;
-    this.assets = assets; // may be this is wrong
-    this.width = width;
-    this.height = height;
+    this.width = 1000;
+    this.height = 360;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
-
+     
     this.items = [];
-    const env = new Env(this.ctx, assets);
-    this.add = new Add(this.items, env); // Use Add.js as a wrapper for creating new items
+    //This will prevent from creating env again and again
+    if(env==null){
+      this.env = new Env(this.ctx);
+    }else {
+      this.env = env;
+    }
+    this.add = new Add(this.items, this.env); // Use Add.js as a wrapper for creating new items
 
-    this.drawModule = new DrawModule(this.ctx, this.canvas, slideExtra, assets);
+    this.drawModule = new DrawModule(this.ctx, this.canvas, slideExtra);
     this.eventModule = new EventModule(this.canvas, this.items);
     this.inputModule = new InputModule();
 
     this._isRunning = false;
     this._frameId = null;
   }
-
- async loadImages(imagesArray=[]){
-  if(this.assets){
-    this.assets.images =  await loadImagesLocal(imagesArray);
+ async loadImages(imagesArray=[]){//thise can be loaded later
+    this.env.images =  await loadImagesLocal(imagesArray);
     return true;
-  }else {return false;}
  }
-
+  init(){
+    this.canvas.width = this.width;
+    this.canvas.height = this.height;
+  }
   onMouse(eventType, callback) {
     this.eventModule.on(eventType, callback);
   }
@@ -82,7 +87,6 @@ export default class TaleemCanvas {
    
   }
 
-  // Delete a single item using the item (BaseItem object).
   deleteItem(item) {
     const index = this.items.findIndex(i => i.itemExtra.uuid === item.itemExtra.uuid);
     if (index !== -1) {
@@ -91,14 +95,11 @@ export default class TaleemCanvas {
     }
   }
 
-  // Remove all items.
   deleteAllItems() {
     this.items.splice(0, this.items.length);
     this.draw();
   }
 
-  // Clone an item: deep copy its itemExtra, generate a new uuid,
-  // then create a new item using the appropriate Add.js method.
   cloneItem(item) {
     const newItemExtra = JSON.parse(JSON.stringify(item.itemExtra));
     newItemExtra.uuid = uuid();
@@ -116,12 +117,10 @@ export default class TaleemCanvas {
     return newItem;
   }
 
-  // Log the itemExtra data to the console.
   logItem(item) {
     console.log(item.itemExtra);
   }
 
-  // Save returns an array of itemExtra objects that can be used with addItems.
   save() {
     return this.items.map(item => item.itemExtra);
   }
