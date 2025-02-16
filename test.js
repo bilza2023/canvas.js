@@ -10,6 +10,10 @@ async function run() {
     const ctx = canvasElement.getContext("2d");
     const canvas = new TaleemCanvas(canvasElement, ctx);
     await canvas.loadImages(['./images/scene.png']);
+
+    const backgrundImagesList = canvas.background.getBackgroundImages();
+    canvas.background.set("backgroundImage" , backgrundImagesList[6]);
+    // console.log("getBackgroundImages",backgrundImagesList);
     
     const mainImage = canvas.add.image();
     if (mainImage) {

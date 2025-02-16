@@ -15,6 +15,10 @@ export default class RenderContext {
     getImage(name){
         return this.images.get(name);
     }
+    getBackgroundImage(name){
+        return this.backgroundImages.get(name);
+    }
+
     getSprite(name){
         return this.sprites.get(name);
     }

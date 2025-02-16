@@ -2,31 +2,10 @@ var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 class DrawModule {
-  constructor(ctx, canvas, slideExtra = null) {
+  constructor(ctx, canvas, backgroundItem) {
     this.ctx = ctx;
     this.canvas = canvas;
-    if (slideExtra == null) {
-      this.slideExtra = this.getSlideExtra();
-    } else {
-      this.slideExtra = slideExtra;
-    }
-  }
-  getSlideExtra() {
-    return {
-      backgroundColor: "#efebb8",
-      canvasWidth: 1e3,
-      canvasHeight: 360,
-      cellHeight: 25,
-      cellWidth: 25,
-      bgImg: "black_mat",
-      bgGlobalAlpha: 1,
-      xFactor: 0,
-      yFactor: 0,
-      ///////////////////
-      showGrid: false,
-      gridLineWidth: 1,
-      gridLineColor: "gray"
-    };
+    this.backgroundItem = backgroundItem;
   }
   clear() {
     const { ctx, canvas, slideExtra } = this;
@@ -35,71 +14,18 @@ class DrawModule {
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
-  drawBackground() {
-    if (!this.slideExtra.bgGlobalAlpha) {
-      this.slideExtra.bgGlobalAlpha = 1;
-    }
-    this.clear();
-    this.drawBackgroundImage();
-    if (this.slideExtra.showGrid) {
-      this.drawGrid();
-    }
-  }
-  drawBackgroundImage() {
-    const { slideExtra, assets } = this;
-    if (slideExtra.bgImg && assets.bgImages) {
-      for (const element of assets.bgImages) {
-        if (element.name === slideExtra.bgImg) {
-          this.bgImage(element.img, slideExtra.bgGlobalAlpha);
-          break;
-        }
-      }
-    }
-  }
-  bgImage(img, alpha = 1) {
-    const { ctx, canvas } = this;
-    ctx.globalAlpha = alpha;
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    ctx.globalAlpha = 1;
-  }
-  drawGrid() {
-    const { ctx, canvas, slideExtra } = this;
-    const {
-      cellWidth = 100,
-      cellHeight = 100,
-      gridLineWidth = 2,
-      gridLineColor = "black"
-    } = slideExtra;
-    ctx.save();
-    ctx.translate(0.5, 0.5);
-    ctx.imageSmoothingEnabled = false;
-    ctx.strokeStyle = gridLineColor;
-    ctx.lineWidth = gridLineWidth;
-    for (let x = cellWidth; x < canvas.width; x += cellWidth) {
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, canvas.height);
-      ctx.stroke();
-    }
-    for (let y2 = cellHeight; y2 < canvas.height; y2 += cellHeight) {
-      ctx.beginPath();
-      ctx.moveTo(0, y2);
-      ctx.lineTo(canvas.width, y2);
-      ctx.stroke();
-    }
-    ctx.restore();
-  }
   drawItems(items = []) {
-    const { ctx, assets } = this;
     items.forEach((item) => {
       if (typeof item.draw === "function") {
-        item.draw(ctx, assets);
+        item.draw(this.ctx);
       }
     });
   }
   draw(items = []) {
-    this.drawBackground();
+    this.ctx.save();
+    this.backgroundItem.draw(this.ctx);
     this.drawItems(items);
+    this.ctx.restore();
   }
 }
 class EventModule {
@@ -1903,6 +1829,9 @@ class RenderContext {
   getImage(name) {
     return this.images.get(name);
   }
+  getBackgroundImage(name) {
+    return this.backgroundImages.get(name);
+  }
   getSprite(name) {
     return this.sprites.get(name);
   }
@@ -1968,8 +1897,101 @@ async function loadImagesLocal(imagesUrlArray) {
     return /* @__PURE__ */ new Map();
   }
 }
+class BackgroundItem extends BaseItem {
+  constructor(itemExtra) {
+    super(itemExtra || BackgroundItem.itemExtraData());
+  }
+  static itemExtraData() {
+    return {
+      uuid: uuid$1(),
+      type: "background",
+      backgroundColor: "gray",
+      cellHeight: 25,
+      cellWidth: 25,
+      backgroundImage: null,
+      globalAlpha: 1,
+      ///////////////////
+      showGrid: true,
+      gridLineWidth: 1,
+      gridLineColor: "#685454"
+    };
+  }
+  drawBgImage(ctx) {
+    const base64String = this.env.getBackgroundImage(this.itemExtra.backgroundImage);
+    if (!base64String || typeof base64String !== "string") {
+      console.error("Invalid background image:", this.itemExtra.backgroundImage);
+      return;
+    }
+    if (!this.cachedBgImage) {
+      this.cachedBgImage = new Image();
+      this.cachedBgImage.src = base64String;
+    }
+    if (this.cachedBgImage.complete) {
+      ctx.globalAlpha = this.itemExtra.globalAlpha;
+      ctx.drawImage(this.cachedBgImage, 0, 0, this.env.getCanvasWidth(), this.env.getCanvasHeight());
+      ctx.globalAlpha = 1;
+    } else {
+      this.cachedBgImage.onload = () => {
+        ctx.globalAlpha = this.itemExtra.globalAlpha;
+        ctx.drawImage(this.cachedBgImage, 0, 0, this.env.getCanvasWidth(), this.env.getCanvasHeight());
+        ctx.globalAlpha = 1;
+      };
+    }
+  }
+  getBackgroundImages() {
+    return Array.from(this.env.backgroundImages.keys());
+  }
+  drawGrid(ctx) {
+    ctx.strokeStyle = this.itemExtra.gridLineColor;
+    ctx.lineWidth = this.itemExtra.gridLineWidth;
+    const width = this.env.getCanvasWidth();
+    const height = this.env.getCanvasHeight();
+    for (let x = this.itemExtra.cellWidth; x < width; x += this.itemExtra.cellWidth) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+      ctx.stroke();
+    }
+    for (let y2 = this.itemExtra.cellHeight; y2 < height; y2 += this.itemExtra.cellHeight) {
+      ctx.beginPath();
+      ctx.moveTo(0, y2);
+      ctx.lineTo(width, y2);
+      ctx.stroke();
+    }
+  }
+  draw(ctx) {
+    ctx.globalAlpha = this.itemExtra.globalAlpha;
+    const width = this.env.getCanvasWidth();
+    const height = this.env.getCanvasHeight();
+    ctx.fillStyle = this.itemExtra.backgroundColor;
+    ctx.fillRect(0, 0, width, height);
+    if (this.itemExtra.backgroundImage !== null) {
+      this.drawBgImage(ctx);
+    }
+    if (this.itemExtra.showGrid) {
+      this.drawGrid(ctx);
+    }
+  }
+  // drawBackgroundImage() {
+  //   const { slideExtra } = this;
+  //   if (slideExtra.bgImg && assets.bgImages) {
+  //     for (const element of assets.bgImages) {
+  //       if (element.name === slideExtra.bgImg) {
+  //         this.bgImage(element.img, slideExtra.bgGlobalAlpha);
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
+  // bgImage(img, alpha = 1) {
+  //   const { ctx, canvas } = this;
+  //   ctx.globalAlpha = alpha;
+  //   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  //   ctx.globalAlpha = 1;
+  // }
+}
 class TaleemCanvas {
-  constructor(canvas, ctx, slideExtra = {}, env = null) {
+  constructor(canvas, ctx, env = null) {
     if (!canvas || !ctx) {
       console.error("TaleemCanvas requires both a canvas element and a 2D rendering context.");
       throw new Error("TaleemCanvas requires both `canvas` and `ctx`.");
@@ -1987,7 +2009,9 @@ class TaleemCanvas {
       this.env = env;
     }
     this.add = new Add(this.items, this.env);
-    this.drawModule = new DrawModule(this.ctx, this.canvas, slideExtra);
+    this.background = new BackgroundItem();
+    this.background.env = this.env;
+    this.drawModule = new DrawModule(this.ctx, this.canvas, this.background);
     this.eventModule = new EventModule(this.canvas, this.items);
     this.inputModule = new InputModule();
     this._isRunning = false;

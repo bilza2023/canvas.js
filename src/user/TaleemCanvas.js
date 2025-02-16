@@ -6,9 +6,10 @@ import Add from "./Add.js";
 import Env from "../core/Env.js";
 import uuid from "../items/uuid.js"; // Used to generate unique IDs
 import loadImagesLocal from "./loadImagesLocal.js";
+import BackgroundItem from "../items/BackgroundItem.js";
 
 export default class TaleemCanvas {
-  constructor(canvas, ctx, slideExtra = {} ,env=null) {
+  constructor(canvas, ctx , env=null) {
     if (!canvas || !ctx) {
       console.error("TaleemCanvas requires both a canvas element and a 2D rendering context.");
       throw new Error("TaleemCanvas requires both `canvas` and `ctx`.");
@@ -22,25 +23,28 @@ export default class TaleemCanvas {
     this.canvas.height = this.height;
      
     this.items = [];
-    //This will prevent from creating env again and again
-    if(env==null){
-      this.env = new Env(this.ctx);
-    }else {
-      this.env = env;
-    }
+        //This will prevent from creating env again and again
+        if(env==null){
+          this.env = new Env(this.ctx);
+        }else {
+          this.env = env;
+        }
     this.add = new Add(this.items, this.env); // Use Add.js as a wrapper for creating new items
-
-    this.drawModule = new DrawModule(this.ctx, this.canvas, slideExtra);
+    ////////////////////////////////////////////////////////////////////////
+    this.background = new BackgroundItem();
+    this.background.env = this.env;
+    ////////////////////////////////////////////////////////////////////////
+    this.drawModule = new DrawModule(this.ctx, this.canvas, this.background);
     this.eventModule = new EventModule(this.canvas, this.items);
     this.inputModule = new InputModule();
 
     this._isRunning = false;
     this._frameId = null;
   }
- async loadImages(imagesArray=[]){//thise can be loaded later
+  async loadImages(imagesArray=[]){//thise can be loaded later
     this.env.images =  await loadImagesLocal(imagesArray);
     return true;
- }
+  }
   init(){
     this.canvas.width = this.width;
     this.canvas.height = this.height;
