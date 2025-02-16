@@ -1,18 +1,17 @@
 
 
-
-import Assets from "../taleem-assets.js";
 import TaleemCanvas from "../taleem-canvas.js";
-import loadImages from "../loadImages.js";
+
+
 async function run() {
-    const assets = new Assets();
-    debugger;
-    assets.images = await loadImages(['../assets/images/scene.png'])
+  
+ 
     const canvasElement = document.getElementById("myCanvas");
     const ctx = canvasElement.getContext("2d");
-    const canvas = new TaleemCanvas(canvasElement, ctx, assets);
-    canvas.assets = assets; // ✅ Ensure assets are properly assigned
-
+    const canvas = new TaleemCanvas(canvasElement, ctx);
+    
+    await canvas.loadImages(['../assets/images/scene.png'])
+    
     // Add heading text
     const heading = canvas.add.text();
     heading.x = 400;
@@ -55,35 +54,6 @@ async function run() {
     pieChart.set("labelFontSize", 14);
     pieChart.set("labelColor", "black");
 
-    // ✅ Correctly retrieve sprite sheets
-    const availableSprites = canvas.assets.spritesList;
-    if (availableSprites.length === 0) {
-        console.error("No sprite sheets available.");
-    } else {
-        console.log("Available sprite sheets:", availableSprites);
-
-        // Create a Sprite
-        const sprite = canvas.add.sprite();
-        sprite.x = 100;
-        sprite.y = 100;
-
-        // Set the first available sprite sheet
-        const selectedSpriteSheet = availableSprites[0];
-        sprite.set("src", selectedSpriteSheet);
-
-        // Get available items for the selected sprite sheet
-        const spriteObject = canvas.assets.getSprite(selectedSpriteSheet);
-        const availableItems = spriteObject.getItemNames();
-
-        if (availableItems.length === 0) {
-            console.error(`No items found in sprite sheet: ${selectedSpriteSheet}`);
-        } else {
-            console.log(`Available items in ${selectedSpriteSheet}:`, availableItems);
-
-            // Change the displayed sprite item dynamically
-            sprite.setSelectedItem(availableItems[1]); // ✅ Change to another sprite item
-        }
-    }
 
     canvas.draw();
 }

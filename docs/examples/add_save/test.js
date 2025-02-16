@@ -1,18 +1,15 @@
 
-import Assets from "../taleem-assets.js";
 import TaleemCanvas from "../taleem-canvas.js";
-import loadImages from "../loadImages.js";
+
 
 async function testTaleemCanvas() {
     console.log("🔹 Running TaleemCanvas Test...");
 
-    const assets = new Assets();
-    assets.images = await loadImages(['../assets/images/scene.png']);
-
+    
     const canvasElement = document.getElementById("myCanvas");
     const ctx = canvasElement.getContext("2d");
-    const canvas = new TaleemCanvas(canvasElement, ctx, assets);
-    canvas.assets = assets; 
+    const canvas = new TaleemCanvas(canvasElement, ctx);
+    await canvas.loadImages(['../assets/images/scene.png']);
 
     console.log("✅ Canvas initialized");
 

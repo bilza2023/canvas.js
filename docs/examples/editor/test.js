@@ -1,17 +1,13 @@
 
 
-import Assets from "../taleem-assets.js";
 import TaleemCanvas from "../taleem-canvas.js";
 import CanvasEditor from "./CanvasEditor.js";
-// import loadImages from "./src/utils/loadImages.js";
 
 async function run() {
-    const assets = new Assets();
 
     const canvasElement = document.getElementById("myCanvas");
     const ctx = canvasElement.getContext("2d");
-    const canvas = new TaleemCanvas(canvasElement, ctx, assets);
-    canvas.assets = assets;
+    const canvas = new TaleemCanvas(canvasElement, ctx);
 
     // Add a background color
     canvas.backgroundColor = "#5e0a0a";
@@ -39,7 +35,7 @@ async function run() {
     rect3.set("color", "green");
 
     // Start rendering
-    canvas.start();
+    canvas.draw();
     let canvasEditor = new CanvasEditor(canvas);
 }
 
