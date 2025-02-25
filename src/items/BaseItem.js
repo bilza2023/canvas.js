@@ -94,6 +94,21 @@ export default class BaseItem {
     return false;  // ❌ Return false if the key doesn't exist
 }
 
+ get(key) {
+  if (key in this.itemExtra) {
+    return this.itemExtra[key];
+  }
+  return undefined; // Or return a default value if needed
+}
+getItemExtra() {
+  return this.itemExtra;
+}
+getType(){
+  if (!this.itemExtra || !this.itemExtra.type) {
+    return undefined; // Or throw an error, or return a default value
+  }
+  return this.itemExtra.type;
+}
 ///////////////////////////////////
 align(position, offsetX = 0, offsetY = 0) {
   if (!this.env) {
