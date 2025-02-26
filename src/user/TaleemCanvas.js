@@ -8,6 +8,8 @@ import uuid from "../items/uuid.js"; // Used to generate unique IDs
 import loadImagesLocal from "./loadImagesLocal.js";
 import BackgroundItem from "../items/BackgroundItem.js";
 
+/////////////////////////////////////////////////////////////////
+
 export default class TaleemCanvas {
   constructor(canvas, ctx , env=null) {
     if (!canvas || !ctx) {
@@ -51,6 +53,14 @@ export default class TaleemCanvas {
   }
   onMouse(eventType, callback) {
     this.eventModule.on(eventType, callback);
+  }
+
+  setCanvasExtra(itemData){
+    this.background.itemExtra = itemData;
+  }
+
+  getCanvasExtra(){
+    return this.background.itemExtra;
   }
 
   onKey(eventType, callback) {

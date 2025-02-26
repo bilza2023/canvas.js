@@ -5,7 +5,7 @@ import TaleemCanvas from "./index.js";
 
 
 async function run() {
-    
+
     const canvasElement = document.getElementById("myCanvas");
     const ctx = canvasElement.getContext("2d");
     const canvas = new TaleemCanvas(canvasElement, ctx);
@@ -35,7 +35,21 @@ async function run() {
     sprite.set("src" , getAvailableSprites[3]);
     sprite.set("selectedItem" , getSpriteItems[2]);
 
- 
+    let slideExtra = {
+        uuid: "0000asldkfj",
+        type: 'background',  
+        backgroundColor: 'green',
+        cellHeight: 25,
+        cellWidth: 25,
+        backgroundImage: null,
+        globalAlpha: 1,
+        showGrid: false,
+        gridLineWidth: 1,
+        gridLineColor: '#685454'
+      };
+    canvas.setCanvasExtra(slideExtra);
+    const canvasExtra = canvas.getCanvasExtra();
+    console.log("canvasExtra" , canvasExtra);    
     canvas.draw();
 }
 
